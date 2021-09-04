@@ -1,8 +1,6 @@
 import config
-import csv
+import json
 import alpaca_trade_api as tradeapi
-from operator import itemgetter
-import math
 import selection
 import selection_json
 
@@ -28,9 +26,9 @@ selection = selection.get_index(data_file)
 #Making sure that I can convert csv to json
 data_file_json = 'meta_etf_json.csv'
 selection_json = selection_json.get_json(data_file_json)
-print(selection_json)
+#print(selection_json)
 
-#Check if the chosen stocks are actually fractionable
+#CSV: Check if the chosen stocks are actually fractionable
 def final_selection():
   etf = []
   for stock in selection:
@@ -42,8 +40,15 @@ def final_selection():
       print(f"{stock} is not available for fractional trading")
   print(f"My ETF contains the following {len(etf)} stocks: {etf}")
   return etf
-
 etf = final_selection()
+
+#JSON: Check if the chosen stocks are actually fractionable
+def final_selection_json():
+  #etf_json = {}
+  with open('index.json') as f:    
+    data = json.load(f)
+    for key in data.keys():
+      print(data[key]['weight'])
 
 #Check buying power
 account = api.get_account()
@@ -67,5 +72,6 @@ def buy():
   return
 
 #Execute it
-buy()
+#buy()
+final_selection_json()
 
