@@ -44,11 +44,19 @@ etf = final_selection()
 
 #JSON: Check if the chosen stocks are actually fractionable
 def final_selection_json():
-  #etf_json = {}
   with open('index.json') as f:    
     data = json.load(f)
-    for key in data.keys():
-      print(data[key]['weight'])
+    for key in list(data.keys()):
+      fractional_asset = api.get_asset(key)
+      if not fractional_asset.fractionable:
+        del data[key]
+    return data 
+     #Parsing weight 
+    #for key in data.keys():
+      #print(data[key]['weight'])
+
+etf_json = final_selection_json()
+print(etf_json)
 
 #Check buying power
 account = api.get_account()
@@ -71,7 +79,26 @@ def buy():
       print((f"Submitted order for {stock} for ${notional}"))
   return
 
+def buy_json():
+  if cash < len(etf):
+    print(f"There are {len(etf)} positions in your ETF. With your current cash balance of ${cash} (not including open orders) you fail to reach the minimum order of $1 per position")
+  else:
+    for key in etf_json.keys():
+      weight = etf_json[key]['weight']
+      notional = round(cash * weight,2)
+      if notional < 1:
+        print(f"Order for {key} not possible, weight too low to reach minimum order size of $1 per position")
+      else:
+        api.submit_order(
+        symbol=stock,
+        notional=notional,
+        side='buy',
+        type='market',
+        time_in_force='day')
+      print((f"Submitted order for {stock} for ${notional}"))
+  return
+
 #Execute it
 #buy()
-final_selection_json()
-
+#final_selection_json()
+buy_json()
