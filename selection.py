@@ -1,14 +1,14 @@
-import csv
+import csv, json
 
-def get_index(data_file):
-    index = []
+def get_json(data_file):
+    index = {}
     with open(data_file) as f:
-        reader = csv.reader(f)
+        reader = csv.DictReader(f)
         for line in reader:
-            symbol = line[0]
-            index.append(symbol)
-    return index
+            symbol = line['symbol']
+            index[symbol] = line
 
-
-
-  
+    with open('index.json', 'w') as jsonFile:
+      jsonFile.write(json.dumps(index, indent=4))
+    
+    return(index)
