@@ -18,7 +18,7 @@ api.cancel_all_orders()
 
 #If needed: Current positions
 portfolio = api.list_positions()
-
+print(portfolio)
 #Not sure why I keep selection.py separate from main.py
 data_file = 'meta_etf.csv'
 selection = selection.get_index(data_file)
@@ -37,7 +37,7 @@ def final_selection():
       etf.append(stock)
       #print(f"We can trade {stock}")
     else:
-      print(f"{stock} is not available for fractional trading")
+     print(f"{stock} is not available for fractional trading")
   print(f"My ETF contains the following {len(etf)} stocks: {etf}")
   return etf
 etf = final_selection()
@@ -80,14 +80,15 @@ def buy():
   return
 
 def buy_json():
-  if cash < len(etf):
-    print(f"There are {len(etf)} positions in your ETF. With your current cash balance of ${cash} (not including open orders) you fail to reach the minimum order of $1 per position")
+  if cash < len(etf_json):
+    print(f"There are {len(etf_json)} positions in your ETF. With your current cash balance of ${cash} (not including open orders) you fail to reach the minimum order of $1 per position")
   else:
     for key in etf_json.keys():
-      weight = etf_json[key]['weight']
+      weight = float(etf_json[key]['weight'])
       notional = round(cash * weight,2)
+      stock = etf_json[key]['symbol']
       if notional < 1:
-        print(f"Order for {key} not possible, weight too low to reach minimum order size of $1 per position")
+        print(f"Order for {stock} not possible, weight too low to reach minimum order size of $1 per position")
       else:
         api.submit_order(
         symbol=stock,
