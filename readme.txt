@@ -10,4 +10,12 @@ To do:
 
 **ETF**
 
-Calculate current overall price for ETF (and change)
+- Calculate current overall price for ETF (and change)
+
+**GUI**
+- List all fractionable shares
+- Assign weights (% and $)
+- Show minimum per month with current selection
+
+- Grab database code from fullstack tutorial
+- figure out how to host on replit (maybe with replit db?)

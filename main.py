@@ -67,4 +67,4 @@ def buy():
   return
 
 #Execute it
-buy()
+#buy()
