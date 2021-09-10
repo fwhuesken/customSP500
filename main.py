@@ -2,6 +2,16 @@ import config
 import json
 import alpaca_trade_api as tradeapi
 import selection
+from flask import Flask, render_template, request, jsonify, url_for, redirect
+import json
+
+site = Flask(__name__)
+
+@site.route('/')
+def index():
+    return render_template('index.html')
+
+site.run(host='0.0.0.0', port=8080)
 
 #Set up connection to Alpaca
 api = tradeapi.REST(config.API_KEY, config.SECRET_KEY, base_url=config.API_URL)
@@ -67,4 +77,4 @@ def buy():
   return
 
 #Execute it
-#buy()
+buy()

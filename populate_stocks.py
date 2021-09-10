@@ -32,7 +32,7 @@ for asset in assets:
     try:
         if asset.status == 'active' and asset.fractionable and asset.tradable and asset.symbol not in symbols:
             print(f"New symbol {asset.symbol} {asset.name}")
-            cursor.execute("INSERT INTO stock (symbol, name, exchange) VALUES (?, ?, ?)", (asset.symbol, asset.name, asset.exchange))
+            cursor.execute("INSERT INTO stock (symbol, name) VALUES (?, ?)", (asset.symbol, asset.name))
     except Exception as e:
         print(asset.symbol)
         print(e)
