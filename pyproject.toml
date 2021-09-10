@@ -9,6 +9,7 @@ python = "^3.8"
 alpaca-trade-api = "^1.2.3"
 replit = "^3.2.4"
 Flask = "^2.0.1"
+fastapi = "^0.68.1"
 
 [tool.poetry.dev-dependencies]
 
