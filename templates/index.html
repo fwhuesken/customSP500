@@ -1,58 +1,38 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>stonks</title>
-        
-        <!--The following two tags give you access to easy UI elements by Semantic UI-->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-        
-    </head>
-    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .positive:before { content: "+"; color: 
+green; }
+        .positive { color: 
+green; }
+        .negative { color: 
+red; }
+        th, td { padding: 1em; }
+        body { margin: 2em auto; max-width: 80em; }
+    </style>
     <body>
-        <!--Adding a container to provide some margin around the table-->
-        <div class="ui container">
-        <h1>Stock list</h1>
-                    
-        <form method="get">
-            <select name="filter">
-                <option value="">All stocks</option>
-                <option {% if request.query_params.filter == 'new_closing_highs' %}selected="selected"{% endif %}
-                        value="new_closing_highs">New Closing Highs</option>
-                <option {% if request.query_params.filter == 'new_closing_lows' %}selected="selected"{% endif %}
-                        value="new_closing_lows">New Closing Lows</option>
-            </select>
-            <input type="submit" />
-            </form>
-            
-         <!--Different table styles can be found at: https://semantic-ui.com/collections/table.html.
-        Change <table class=""> to adjust style-->
-        <table class="ui striped table">
-            
-          <!--Table head describes column names-->  
-          <thead>
+        <form action="/buy" method="post">
+            <input type="text" placeholder="ticker" name="ticker"/>
+            <input type="text" placeholder="# shares" name="shares"/>
+            <input type="text" placeholder="price" name="price"/>
+            <input type="submit" value="Buy"/>
+        </form>
+
+        <table id="portfolio">
             <tr>
-              <th>Symbol</th>
-              <th>Name</th>
+                <th>Symbol</th>
+                <th>Name</th>
             </tr>
-          </thead>
-            
-          <!--We loop through each stock and write it to the table-->  
-          <tbody>
-              {% for stock in stocks %}
             <tr>
-                <td>{{stock.symbol}}</td>
-                <td><a href="/stock/{{stock.symbol}}">{{stock.name}}</a></td>
+                {% for row in rows %}
+            <tr>
+               <td>{{row["symbol"]}}</td>
+               <td>{{row["name"]}}</td>
             </tr>
-              {% endfor %}
-          </tbody>
+         {% endfor %}
+            <tr>
         </table>
-    
-        
-        
-        </div>
-        
-        
-       
-        
+        <a href="/flush">Flush DB</a>
     </body>
 </html>

@@ -27,7 +27,7 @@ selection = selection.get_json(data_file)
 
 #JSON: Check if the chosen stocks are actually fractionable
 def final_selection():
-  with open('index.json') as f:    
+  with open('meta_etf.json') as f:    
     data = json.load(f)
     for key in list(data.keys()):
       fractional_asset = api.get_asset(key)
