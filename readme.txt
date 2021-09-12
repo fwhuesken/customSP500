@@ -10,16 +10,21 @@ To do:
 - ~~List all fractionable shares
 **=> Use PTL approach to get data from database, then use replit approach to display it**~~
 
-**either**
-- exclude all ETF, Depositary
+- ~~add sp500~~~
+- ~~add nasdaq100~~~
+- add dropdown to select different indexes
+- use JOIN to display constituents of sp500 and nasdaq together
+- let user select which ones to drop
 
-**or**
-- only show nasdaq and/or sp500 and let user remove all stocks he doesn't want to add (better)
+
+
 
 
 **Misc**
 - Assign weights (% and $)
 - Show minimum per month with current selection
+- change sp500.py so it accepts all csv (make sure to assign table name based on csv name)
+- display multi dropdown on index.html to 
 
 **ETF**
 

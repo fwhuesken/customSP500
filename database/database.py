@@ -15,10 +15,12 @@ cursor.execute("""
     )
 """)
 
-cursor.execute("""
-    CREATE TABLE IF NOT EXISTS sp500 (
-      id INTEGER PRIMARY KEY,
-      symbol TEXT NOT NULL UNIQUE,
-      name TEXT NOT NULL""")
+#cursor.execute("""
+  #  CREATE TABLE IF NOT EXISTS sp500 (
+   #   symbol TEXT NOT NULL UNIQUE,
+   #   name TEXT NOT NULL,
+   #   sector TEXT
+    #)
+#""")
 
 connection.commit()

@@ -20,14 +20,14 @@ portfolio = api.list_positions()
 #print(portfolio)
 
 #Making sure that I can convert csv to json
-data_file = 'meta_etf.csv'
+data_file = 'etf/meta_etf.csv'
 selection = selection.get_json(data_file)
 #print(selection_json)
 
 
 #JSON: Check if the chosen stocks are actually fractionable
 def final_selection():
-  with open('meta_etf.json') as f:    
+  with open('etf/meta_etf.json') as f:    
     data = json.load(f)
     for key in list(data.keys()):
       fractional_asset = api.get_asset(key)
