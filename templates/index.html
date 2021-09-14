@@ -12,16 +12,14 @@ red; }
         body { margin: 2em auto; max-width: 80em; }
     </style>
     <body>
-        <form action="/buy" method="post">
-            <input type="text" placeholder="ticker" name="ticker"/>
-            <input type="text" placeholder="# shares" name="shares"/>
-            <input type="text" placeholder="price" name="price"/>
-            <input type="submit" value="Buy"/>
-        </form>
-        <select name="cars" id="cars">
+        <form action="/" method="post">
+          <select name="index" id="index">
             <option value="sp500">S&P 500</option>
             <option value="nasdaq100">NASDAQ 100</option>
-
+            <option value="fractionable">All fractionable equities</option>
+            <input type="submit" value="Submit"/>
+          </select>
+        </form>
         <table id="portfolio">
             <tr>
                 <th>Symbol</th>

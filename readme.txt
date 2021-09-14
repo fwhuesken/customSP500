@@ -12,7 +12,8 @@ To do:
 
 - ~~add sp500~~~
 - ~~add nasdaq100~~~
-- add dropdown to select different indexes
+- ~~add dropdown to select different indexes~~~
+- **NEXT**: display selected data
 - use JOIN to display constituents of sp500 and nasdaq together
 - let user select which ones to drop
 

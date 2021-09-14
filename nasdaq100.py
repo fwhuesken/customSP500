@@ -11,7 +11,7 @@ con = sqlite3.connect("app.db")
 
 # drop data into database
 name = 'nasdaq100'
-df.to_sql(nasdaq, con)
+df.to_sql(name, con)
 
 con.commit()
 
