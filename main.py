@@ -19,15 +19,29 @@ def index():
                     """)
   elif index == 'nasdaq100':
         cur.execute("""
-                SELECT symbol, name
-                FROM nasdaq100 
-                ORDER BY symbol
+                SELECT
+                  nasdaq100.symbol,
+                  nasdaq100.name,
+                  sector.sector
+                FROM
+                  nasdaq100 
+                LEFT JOIN sector ON
+                  sector.symbol = nasdaq100.symbol
+                ORDER BY
+                  nasdaq100.symbol
                 """)
   elif index == 'fractionable':
         cur.execute("""
-                SELECT symbol, name
-                FROM stock 
-                ORDER BY symbol
+                SELECT
+                  stock.symbol,
+                  stock.name,
+                  sector.sector
+                FROM
+                  stock 
+                LEFT JOIN  sector ON
+                  sector.symbol = stock.symbol
+                ORDER BY
+                  stock.symbol
                 """)
   
   
