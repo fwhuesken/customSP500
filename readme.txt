@@ -13,8 +13,10 @@ To do:
 - ~~add sp500~~~
 - ~~add nasdaq100~~~
 - ~~add dropdown to select different indexes~~~
-- **NEXT**: display selected data
-- use JOIN to display constituents of sp500 and nasdaq together
+- ~~display selected data~~
+- scrape sector data from Yahoo?
+- separate table for sector needed
+use JOIN to display constituents of sp500 and nasdaq together
 - let user select which ones to drop
 
 
@@ -25,7 +27,8 @@ To do:
 - Assign weights (% and $)
 - Show minimum per month with current selection
 - change sp500.py so it accepts all csv (make sure to assign table name based on csv name)
-- display multi dropdown on index.html to 
+- display multi dropdown on index.html to join tables
+- config: same file in two places
 
 **ETF**
 

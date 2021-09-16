@@ -14,6 +14,7 @@ red; }
     <body>
         <form action="/" method="post">
           <select name="index" id="index">
+            <option></option>
             <option value="sp500">S&P 500</option>
             <option value="nasdaq100">NASDAQ 100</option>
             <option value="fractionable">All fractionable equities</option>
@@ -24,12 +25,14 @@ red; }
             <tr>
                 <th>Symbol</th>
                 <th>Name</th>
+                <th>Sector</th>
             </tr>
             <tr>
                 {% for row in rows %}
             <tr>
                <td>{{row["symbol"]}}</td>
                <td>{{row["name"]}}</td>
+               <td>{{row["sector"]}}</td>
             </tr>
          {% endfor %}
             <tr>

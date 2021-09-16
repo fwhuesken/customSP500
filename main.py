@@ -17,13 +17,19 @@ def index():
                 FROM sp500
                 ORDER BY symbol
                     """)
-  else:
+  elif index == 'nasdaq100':
         cur.execute("""
                 SELECT symbol, name
                 FROM nasdaq100 
                 ORDER BY symbol
                 """)
-
+  elif index == 'fractionable':
+        cur.execute("""
+                SELECT symbol, name
+                FROM stock 
+                ORDER BY symbol
+                """)
+  
   
   rows = cur.fetchall(); 
   return render_template('index.html',rows = rows)
