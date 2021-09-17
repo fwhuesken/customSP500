@@ -14,9 +14,9 @@ To do:
 - ~~add nasdaq100~~~
 - ~~add dropdown to select different indexes~~~
 - ~~display selected data~~
-- scrape sector data from Yahoo?
-- separate table for sector needed
-use JOIN to display constituents of sp500 and nasdaq together
+- ~~separate table for sector needed~~
+- need sector data for all fractionable stocks
+- use JOIN to display constituents of sp500 and nasdaq together
 - let user select which ones to drop
 
 
@@ -29,7 +29,7 @@ use JOIN to display constituents of sp500 and nasdaq together
 - change sp500.py so it accepts all csv (make sure to assign table name based on csv name)
 - display multi dropdown on index.html to join tables
 - config: same file in two places
-
+- automate dropdowns by launching script.js (doesn't work so far with flask)
 **ETF**
 
 - Store ETF composition in table
