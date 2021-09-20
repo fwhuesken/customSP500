@@ -15,12 +15,9 @@ To do:
 - ~~add dropdown to select different indexes~~~
 - ~~display selected data~~
 - ~~separate table for sector needed~~
-- need sector data for all fractionable stocks
-- use JOIN to display constituents of sp500 and nasdaq together
-- let user select which ones to drop
-
-
-
+~~let user select which ones to drop~~
+- figure out how the filter function works and apply to sector dropdown
+- on a separate page, show selection and allow weighting (market cap and equal)
 
 
 **Misc**
@@ -30,8 +27,10 @@ To do:
 - display multi dropdown on index.html to join tables
 - config: same file in two places
 - automate dropdowns by launching script.js (doesn't work so far with flask)
-**ETF**
+*
 
+*ETF**
 - Store ETF composition in table
 - Calculate current overall price for ETF (and change)
-
+- need sector data for all fractionable stocks
+- use JOIN to display constituents of sp500 and nasdaq together

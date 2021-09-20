@@ -1,5 +1,28 @@
 <!DOCTYPE html>
 <html>
+    <script>
+      function myFunction() {
+        // Declare variables
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("search");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("portfolio");
+        tr = table.getElementsByTagName("tr");
+
+        // Loop through all table rows, and hide those who don't match the search query
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td")[1];
+          if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          }
+        }
+      }
+    </script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
         .positive:before { content: "+"; color: 
@@ -13,6 +36,7 @@ red; }
     </style>
 
     <body>
+      <input type="text" id="search" onkeyup="myFunction()" placeholder="Search for name">
         <form action="/" method="post">
           <select name="index" id="index">
             <option selected disabled hidden>Index</option>
@@ -38,6 +62,12 @@ red; }
             <input type="submit" value="Submit"/>
           </select>
 
+
+          <select id="sector-experiment">
+            <option></option>
+          </select>
+
+          
         </form>
         <table id="portfolio">
             <tr>
