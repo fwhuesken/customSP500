@@ -26,25 +26,33 @@
       
       function filterSector() {
         // Declare variables
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("sector");
-        filter = input.value;
-        table = document.getElementById("portfolio");
-        tr = table.getElementsByTagName("tr");
+        
+          var input, filter, table, tr, td, i, txtValue;
+          input = document.getElementById("sector");
+          filter = input.value;
+          table = document.getElementById("portfolio");
+          tr = table.getElementsByTagName("tr");
+          console.log(filter)
 
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-          td = tr[i].getElementsByTagName("td")[2];
-          if (td) {
-            txtValue = td.innerText;
-            if (txtValue.indexOf(filter) > -1) {
-              tr[i].style.display = "";
-            } else {
-              tr[i].style.display = "none";
+          // Loop through all table rows, and hide those who don't match the search query
+        
+              for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[2];
+                if (td) {
+                  txtValue = td.innerText;
+                  if (input.value == "all-sectors") {
+                      tr[i].style.display = "";
+                  }
+                    else if (txtValue.indexOf(filter) > -1) {
+                      tr[i].style.display = "";
+                    } else {
+                      tr[i].style.display = "none";
+                    }
+                }
+              }
             }
-          }
-        }
-      }
+      
+    
 
     </script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -68,9 +76,13 @@ red; }
             <option value="fractionable">All fractionable equities</option>
             <input type="submit" value="Submit"/>
           </select>
+<p></p>
+
+          <input type="text" id="search" onkeyup="searchName()" placeholder="Search for name">
 
           <select id="sector" onchange="filterSector()">
             <option selected disabled hidden>Sectors</option>
+            <option value="all-sectors">All sectors</option>
             <option>Industrials</option>
             <option>Health Care</option>
             <option>Information Technology</option>
@@ -85,7 +97,7 @@ red; }
           </select>
           
 
-          <input type="text" id="search" onkeyup="searchName()" placeholder="Search for name">
+         
         </form>
         <table id="portfolio">
             <tr>
