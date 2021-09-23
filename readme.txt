@@ -15,8 +15,8 @@ To do:
 - ~~add dropdown to select different indexes~~~
 - ~~display selected data~~
 - ~~separate table for sector needed~~
-~~let user select which ones to drop~~
-- figure out how the filter function works and apply to sector dropdown
+- ~~let user select which ones to drop~~
+- ~~figure out how the filter function works and apply to sector dropdown~~
 - on a separate page, show selection and allow weighting (market cap and equal)
 
 
