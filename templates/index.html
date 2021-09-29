@@ -79,7 +79,7 @@ red; }
 
     <body>      
         <form action="/" method="post">
-          <select name="index" id="index" onchange="baselineIndex()">
+          <select name="index" id="index" class="form-control" onchange="baselineIndex()">
             <option selected disabled hidden>Index</option>
             <option value="fractionable">All fractionable equities</option>
             <option value="sp500">S&P 500</option>
@@ -88,9 +88,9 @@ red; }
           </select>
 <p></p>
 
-          <input type="text" id="search" onkeyup="searchName()" placeholder="Search for name">
+          
 
-          <select id="sector" onchange="filterSector()">
+          <select id="sector" class="form-control" onchange="filterSector()">
             <option selected disabled hidden>Sectors</option>
             <option value="all-sectors">All sectors</option>
             <option>Industrials</option>
@@ -105,8 +105,12 @@ red; }
             <option>Real Estate</option>
             <option>Energy</option>
           </select>
-          
+          <p></p>
+
+        <input class="form-control" type="text" id="search" onkeyup="searchName()" placeholder="Search for name">
+
         </form>
+
 
         <h3 id="baselineIndex"></h3>
         <h3 id="positionCount"></h3>
