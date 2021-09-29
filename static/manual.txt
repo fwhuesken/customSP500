@@ -1,0 +1,3 @@
+https://flask.palletsprojects.com/en/2.0.x/quickstart/?highlight=static#static-files
+
+https://stackoverflow.com/questions/14711552/external-javascript-file-is-not-getting-added-when-running-on-flask

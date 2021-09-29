@@ -17,7 +17,9 @@ To do:
 - ~~separate table for sector needed~~
 - ~~let user select which ones to drop~~
 - ~~figure out how the filter function works and apply to sector dropdown~~
-- on a separate page, show selection and allow weighting (market cap and equal)
+- use current selection to populate a subsequent page
+- on that next page, show selection and allow weighting (market cap and equal)
+- OR: remove all non-necessary elements /  all checked stocks from DOM and display submit button / weighting option
 
 
 **Misc**
@@ -26,10 +28,11 @@ To do:
 - change sp500.py so it accepts all csv (make sure to assign table name based on csv name)
 - display multi dropdown on index.html to join tables
 - config: same file in two places
-- automate dropdowns by launching script.js (doesn't work so far with flask)
-*
+- automate dropdowns by launching script.js (doesn't work so far with flask), see manual.txt in static folder
+- rewrite main.py so that index dropdown value determines database pull without additional if statements for new baseline indexes
+- HTML table to json: https://stackoverflow.com/questions/6271856/html-table-to-json
 
-*ETF**
+**ETF**
 - Store ETF composition in table
 - Calculate current overall price for ETF (and change)
 - need sector data for all fractionable stocks

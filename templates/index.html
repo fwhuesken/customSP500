@@ -2,14 +2,12 @@
 <html>
     <script>
       function searchName() {
-        // Declare variables
         var input, filter, table, tr, td, i, txtValue;
         input = document.getElementById("search");
         filter = input.value.toUpperCase();
         table = document.getElementById("portfolio");
         tr = table.getElementsByTagName("tr");
 
-        // Loop through all table rows, and hide those who don't match the search query
         for (i = 0; i < tr.length; i++) {
           td = tr[i].getElementsByTagName("td")[1];
           if (td) {
@@ -25,8 +23,6 @@
 
       
       function filterSector() {
-        // Declare variables
-        
           var input, filter, table, tr, td, i, txtValue;
           input = document.getElementById("sector");
           filter = input.value;
@@ -51,6 +47,20 @@
                 }
               }
             }
+
+      function baselineIndex() {
+        let input = document.getElementById("index").innerHTML;
+        let text =  document.getElementById('baselineIndex');
+        
+        text.innerHTML = "You're baseline index is " + input;
+      }
+
+      function countPositions () {
+        let table = document.getElementById("portfolio");
+        let rowCount = table.tBodies[0].rows.length;
+        let positionCount = document.getElementById("positionCount")
+        positionCount.innerHTML = rowCount
+      }
       
     
 
@@ -69,12 +79,12 @@ red; }
 
     <body>      
         <form action="/" method="post">
-          <select name="index" id="index">
+          <select name="index" id="index" onchange="baselineIndex()">
             <option selected disabled hidden>Index</option>
+            <option value="fractionable">All fractionable equities</option>
             <option value="sp500">S&P 500</option>
             <option value="nasdaq100">NASDAQ 100</option>
-            <option value="fractionable">All fractionable equities</option>
-            <input type="submit" value="Submit"/>
+            <input type="submit" value="Submit" onclick="countPositions()"/>
           </select>
 <p></p>
 
@@ -96,23 +106,36 @@ red; }
             <option>Energy</option>
           </select>
           
-
-         
         </form>
-        <table id="portfolio">
-            <tr>
-                <th>Symbol</th>
-                <th>Name</th>
-                <th>Sector</th>
-                <th>Remove from selection</th>
-            </tr>
+
+        <h3 id="baselineIndex"></h3>
+        <h3 id="positionCount"></h3>
+
+        <table id="portfolio" class="table table-hover table-condensed">
+            <thead>
+              <tr>
+                  <th>Symbol</th>
+                  <th>Name</th>
+                  <th>Sector</th>
+                  <th>Include in selection</th>
+                  <th>Share in selection</th>
+              </tr>
+            </thead>  
             <tr>
                 {% for row in rows %}
             <tr>
                <td>{{row["symbol"]}}</td>
                <td>{{row["name"]}}</td>
                <td>{{row["sector"]}}</td>
-               <td><input type="checkbox" id="remove" value="remove"></td>
+               <td><input type="checkbox" id="include" value="include" checked></td>
+               <td><div class="form-group">
+                    <div class="input-group mb-3">
+                      <input type="text" class="form-control" aria-label="">
+                      <div class="input-group-append">
+                        <span class="input-group-text">%</span>
+                      </div>
+                    </div>
+                  </div>
             </tr>
          {% endfor %}
         </table>
