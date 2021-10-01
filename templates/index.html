@@ -1,80 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <script>
-      function searchName() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("search");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("portfolio");
-        tr = table.getElementsByTagName("tr");
-
-        for (i = 0; i < tr.length; i++) {
-          td = tr[i].getElementsByTagName("td")[1];
-          if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-              tr[i].style.display = "";
-            } else {
-              tr[i].style.display = "none";
-            }
-          }
-        }
-      }
-
-      
-      function filterSector() {
-          var input, filter, table, tr, td, i, txtValue;
-          input = document.getElementById("sector");
-          filter = input.value;
-          table = document.getElementById("portfolio");
-          tr = table.getElementsByTagName("tr");
-          console.log(filter)
-
-          // Loop through all table rows, and hide those who don't match the search query
-        
-              for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[2];
-                if (td) {
-                  txtValue = td.innerText;
-                  if (input.value == "all-sectors") {
-                      tr[i].style.display = "";
-                  }
-                    else if (txtValue.indexOf(filter) > -1) {
-                      tr[i].style.display = "";
-                    } else {
-                      tr[i].style.display = "none";
-                    }
-                }
-              }
-            }
-
-      function baselineIndex() {
-        let e = document.getElementById("index");
-        let value = e.options[e.selectedIndex].text;
-
-        let text =  document.getElementById('baselineIndex');
-        
-      
-        text.innerHTML = value;
-      }
-
-      function countPositions () {
-        let table = document.getElementById("portfolio");
-        let rowCount = table.tBodies[0].rows.length;
-        let positionCount = document.getElementById("positionCount")
-        positionCount.innerHTML = rowCount
-      }
-      
-
-      document.getElementById('select').onclick = function() {
-    var checkboxes = document.getElementsById('include');
-    for (var checkbox of checkboxes) {
-        checkbox.checked = true;
-    }
-}
     
-
-    </script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
         .positive:before { content: "+"; color: 
@@ -125,7 +51,7 @@ red; }
    <p></p>
         <h3 id="baselineIndex"></h3>
         <h3 id="positionCount"></h3>
-        <button id="select">Select All</button>
+        <button id="submit" onclick="toggle(this)">Select All</button>
  <p></p>
   <p></p>
    <p></p>
@@ -166,4 +92,79 @@ red; }
          {% endfor %}
         </table>
     </body>
+  <script>
+      function searchName() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("search");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("portfolio");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td")[1];
+          if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              tr[i].style.display = "";
+            } else {
+              tr[i].style.display = "none";
+            }
+          }
+        }
+      }
+
+      
+      function filterSector() {
+          var input, filter, table, tr, td, i, txtValue;
+          input = document.getElementById("sector");
+          filter = input.value;
+          table = document.getElementById("portfolio");
+          tr = table.getElementsByTagName("tr");
+          console.log(filter)
+
+          // Loop through all table rows, and hide those who don't match the search query
+        
+              for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[2];
+                if (td) {
+                  txtValue = td.innerText;
+                  if (input.value == "all-sectors") {
+                      tr[i].style.display = "";
+                  }
+                    else if (txtValue.indexOf(filter) > -1) {
+                      tr[i].style.display = "";
+                    } else {
+                      tr[i].style.display = "none";
+                    }
+                }
+              }
+            }
+
+      function baselineIndex() {
+        let e = document.getElementById("index");
+        let value = e.options[e.selectedIndex].text;
+        let text =  document.getElementById('baselineIndex');
+        text.innerHTML = value;
+      }
+
+      function countPositions () {
+        let table = document.getElementById("portfolio");
+        let rowCount = table.tBodies[0].rows.length;
+        let positionCount = document.getElementById("positionCount")
+        positionCount.innerHTML = rowCount
+      }
+      
+
+      function toggle(oInput) {
+        let aInputs = document.getElementsByTagName('input');
+          for (let i=0;i<aInputs.length;i++) {
+            if (aInputs[i] != oInput) {
+            aInputs[i].checked = oInput.checked;
+        }
+    }
+  }
+
+    
+
+    </script>
 </html>
