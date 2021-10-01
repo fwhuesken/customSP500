@@ -51,7 +51,7 @@ red; }
    <p></p>
         <h3 id="baselineIndex"></h3>
         <h3 id="positionCount"></h3>
-        <button id="submit" onclick="toggle(this)">Select All</button>
+        <button id="submit" onclick="toggle(this)">Remove  all from selection</button>
  <p></p>
   <p></p>
    <p></p>
@@ -155,15 +155,13 @@ red; }
       }
       
 
-      function toggle(oInput) {
-        let aInputs = document.getElementsByTagName('input');
-          for (let i=0;i<aInputs.length;i++) {
-            if (aInputs[i] != oInput) {
-            aInputs[i].checked = oInput.checked;
-        }
-    }
+      function toggle(source) {
+        checkboxes = document.getElementsByTagName('input');
+        for(var i=0, n=checkboxes.length;i<n;i++) {
+          checkboxes[i].checked = source.checked;
   }
-
+}
+  
     
 
     </script>
