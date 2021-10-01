@@ -5,7 +5,7 @@ site = Flask(__name__)
 
 @site.route('/', methods=['GET', 'POST'])
 def index():
-  index = request.form.get('index', False)
+  index = request.form.get('index', 'fractionable')
   con = sqlite3.connect('app.db')
   con.row_factory = sqlite3.Row
    

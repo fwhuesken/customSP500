@@ -49,10 +49,13 @@
             }
 
       function baselineIndex() {
-        let input = document.getElementById("index").innerHTML;
+        let e = document.getElementById("index");
+        let value = e.options[e.selectedIndex].text;
+
         let text =  document.getElementById('baselineIndex');
         
-        text.innerHTML = "You're baseline index is " + input;
+      
+        text.innerHTML = value;
       }
 
       function countPositions () {
@@ -62,6 +65,13 @@
         positionCount.innerHTML = rowCount
       }
       
+
+      document.getElementById('select').onclick = function() {
+    var checkboxes = document.getElementsById('include');
+    for (var checkbox of checkboxes) {
+        checkbox.checked = true;
+    }
+}
     
 
     </script>
@@ -79,8 +89,8 @@ red; }
 
     <body>      
         <form action="/" method="post">
+          <label>Index</label>
           <select name="index" id="index" class="form-control" onchange="baselineIndex()">
-            <option selected disabled hidden>Index</option>
             <option value="fractionable">All fractionable equities</option>
             <option value="sp500">S&P 500</option>
             <option value="nasdaq100">NASDAQ 100</option>
@@ -88,10 +98,9 @@ red; }
           </select>
 <p></p>
 
-          
-
+                
+          <label>Sectors</label>
           <select id="sector" class="form-control" onchange="filterSector()">
-            <option selected disabled hidden>Sectors</option>
             <option value="all-sectors">All sectors</option>
             <option>Industrials</option>
             <option>Health Care</option>
@@ -106,14 +115,27 @@ red; }
             <option>Energy</option>
           </select>
           <p></p>
-
-        <input class="form-control" type="text" id="search" onkeyup="searchName()" placeholder="Search for name">
+          <label>Search for name</label>
+        <input class="form-control" type="text" id="search" onkeyup="searchName()">
 
         </form>
 
-
+ <p></p>
+  <p></p>
+   <p></p>
         <h3 id="baselineIndex"></h3>
         <h3 id="positionCount"></h3>
+        <button id="select">Select All</button>
+ <p></p>
+  <p></p>
+   <p></p>
+    <p></p>
+     <p></p>
+      <p></p>
+       <p></p>
+        <p></p>
+         <p></p>
+
 
         <table id="portfolio" class="table table-hover table-condensed">
             <thead>

@@ -17,10 +17,11 @@ To do:
 - ~~separate table for sector needed~~
 - ~~let user select which ones to drop~~
 - ~~figure out how the filter function works and apply to sector dropdown~~
-- use current selection to populate a subsequent page
+- add button that removes all checks
+- add weighting button that removes all unchecked companies and displays selection option
 - on that next page, show selection and allow weighting (market cap and equal)
 - OR: remove all non-necessary elements /  all checked stocks from DOM and display submit button / weighting option
-
+- onLoad: all fractionable equities are displayed
 
 **Misc**
 - Assign weights (% and $)
