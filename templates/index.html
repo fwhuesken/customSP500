@@ -17,10 +17,12 @@ red; }
         <form action="/" method="post">
           <label>Index</label>
           <select name="index" id="index" class="form-control" onchange="baselineIndex()">
+            
             <option value="fractionable">All fractionable equities</option>
             <option value="sp500">S&P 500</option>
             <option value="nasdaq100">NASDAQ 100</option>
-            <input type="submit" value="Submit" onclick="countPositions()"/>
+
+            <input id=submitIndex type="submit" value="Submit" onclick="countPositions()"/>
           </select>
 <p></p>
 
@@ -51,7 +53,9 @@ red; }
    <p></p>
         <h3 id="baselineIndex"></h3>
         <h3 id="positionCount"></h3>
-        <button id="submit" onclick="toggle(this)">Remove  all from selection</button>
+        <button id="selectAll" onclick="selectAll()">Select all</button>
+        <button id="removeAll" onclick="deSelect()">Remove  all from selection</button>
+        <button id="toJSON" onclick="tableToJson(table)">Selection to JSON</button>
  <p></p>
   <p></p>
    <p></p>
@@ -82,7 +86,7 @@ red; }
                <td><input type="checkbox" id="include" value="include" checked></td>
                <td><div class="form-group">
                     <div class="input-group mb-3">
-                      <input type="text" class="form-control" aria-label="">
+                      <input type="number" class="form-control" aria-label="">
                       <div class="input-group-append">
                         <span class="input-group-text">%</span>
                       </div>
@@ -154,13 +158,49 @@ red; }
         positionCount.innerHTML = rowCount
       }
       
+      function selectAll(){  
+              var ele=document.getElementsByTagName('input');  
+              for(var i=0; i<ele.length; i++){  
+                  if(ele[i].type=='checkbox')  
+                      ele[i].checked=true;  
+              }  
+          }  
 
-      function toggle(source) {
-        checkboxes = document.getElementsByTagName('input');
-        for(var i=0, n=checkboxes.length;i<n;i++) {
-          checkboxes[i].checked = source.checked;
-  }
-}
+       function deSelect(){  
+                var ele=document.getElementsByTagName('input'); 
+                for(var i=0; i<ele.length; i++){  
+                    if(ele[i].type=='checkbox')  
+                        ele[i].checked=false;   
+                }  
+            }          
+      table = document.getElementById(portfolio)
+      function tableToJson(table) {
+        let data = [];
+
+        // first row needs to be headers
+        let headers = [];
+        for (var i=0; i<table.rows[0].cells.length; i++) {
+            headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi,'');
+        }
+
+        // go through cells
+        for (let i=1; i<table.rows.length; i++) {
+
+            let tableRow = table.rows[i];
+            let rowData = {};
+
+            for (let j=0; j<tableRow.cells.length; j++) {
+
+                rowData[ headers[j] ] = tableRow.cells[j].innerHTML;
+
+            }
+
+            data.push(rowData);
+        }       
+        
+        return data;
+        console.log(data);
+    }
   
     
 
