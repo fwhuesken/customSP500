@@ -22,9 +22,11 @@ To do:
 - on that next page, show selection and allow weighting (market cap and equal)
 - OR: remove all non-necessary elements /  all checked stocks from DOM and display submit button / weighting option
 - ~~onLoad: all fractionable equities are displayed~~
+- add event listeners instead of using onclick
+- then: countPosition to be called when clicking select all and remove all buttons
+- separate input button from post request
 - HTML table to json: https://stackoverflow.com/questions/6271856/html-table-to-json
-- allow users to download selection as .csv (and upload it)
-**Generally: How come baselineIndex, countPositions don't work? addEventListener better to manipulate DOM?**
+
 
 **Misc**
 - Assign weights (% and $)
@@ -34,6 +36,7 @@ To do:
 - config: same file in two places
 - automate dropdowns by launching script.js (doesn't work so far with flask), see manual.txt in static folder
 - rewrite main.py so that index dropdown value determines database pull without additional if statements for new baseline indexes
+- allow users to download selection as .csv (and upload it)
 
 
 **ETF**

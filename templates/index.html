@@ -3,14 +3,7 @@
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
-        .positive:before { content: "+"; color: 
-green; }
-        .positive { color: 
-green; }
-        .negative { color: 
-red; }
-        th, td { padding: 0.5em; }
-        body { margin: 2em auto; max-width: 80em; }
+
     </style>
 
     <body>      
@@ -22,8 +15,9 @@ red; }
             <option value="sp500">S&P 500</option>
             <option value="nasdaq100">NASDAQ 100</option>
 
-            <input id=submitIndex type="submit" value="Submit" onclick="countPositions()"/>
+            <input id=submitIndex type="submit" value="Submit"/>
           </select>
+        </form>
 <p></p>
 
                 
@@ -46,16 +40,21 @@ red; }
           <label>Search for name</label>
         <input class="form-control" type="text" id="search" onkeyup="searchName()">
 
-        </form>
+        
 
  <p></p>
   <p></p>
    <p></p>
         <h3 id="baselineIndex"></h3>
+
         <h3 id="positionCount"></h3>
+
         <button id="selectAll" onclick="selectAll()">Select all</button>
+
         <button id="removeAll" onclick="deSelect()">Remove  all from selection</button>
+
         <button id="toJSON" onclick="tableToJson(table)">Selection to JSON</button>
+
  <p></p>
   <p></p>
    <p></p>
@@ -77,13 +76,14 @@ red; }
                   <th>Share in selection</th>
               </tr>
             </thead>  
+            <tbody>
             <tr>
                 {% for row in rows %}
             <tr>
                <td>{{row["symbol"]}}</td>
                <td>{{row["name"]}}</td>
                <td>{{row["sector"]}}</td>
-               <td><input type="checkbox" id="include" value="include" checked></td>
+               <td><input type="checkbox" class="myCheckbox" id="include" value="include" checked></td>
                <td><div class="form-group">
                     <div class="input-group mb-3">
                       <input type="number" class="form-control" aria-label="">
@@ -94,6 +94,7 @@ red; }
                   </div>
             </tr>
          {% endfor %}
+          </tbody>
         </table>
     </body>
   <script>
@@ -150,13 +151,14 @@ red; }
         let text =  document.getElementById('baselineIndex');
         text.innerHTML = value;
       }
-
+/*
       function countPositions () {
         let table = document.getElementById("portfolio");
         let rowCount = table.tBodies[0].rows.length;
         let positionCount = document.getElementById("positionCount")
         positionCount.innerHTML = rowCount
       }
+      */
       
       function selectAll(){  
               var ele=document.getElementsByTagName('input');  
@@ -197,12 +199,31 @@ red; }
 
             data.push(rowData);
         }       
-        
+         console.log(data);
         return data;
-        console.log(data);
+       
     }
   
-    
+/*    
+alert(document.querySelectorAll('input[type="checkbox"]:checked').length);
+*/
 
+const checkboxes = document.querySelectorAll(".myCheckbox");
+const label = document.getElementById("positionCount");
+
+const countPosition = checkboxes.forEach((checkbox) => {
+  checkbox.addEventListener("click", () => {
+    let total = 0;
+
+    for (let i = 0; i < checkboxes.length; i++) {
+      const currentCheckbox = checkboxes[i];
+      if (currentCheckbox.checked) {
+        total += 1;
+      }
+    }
+
+    label.innerHTML = total;
+  });
+});
     </script>
 </html>

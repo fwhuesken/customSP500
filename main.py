@@ -5,6 +5,7 @@ site = Flask(__name__)
 
 @site.route('/', methods=['GET', 'POST'])
 def index():
+  #'fractionable' selected to display data on load. Use 'False' to not display any data
   index = request.form.get('index', 'fractionable')
   con = sqlite3.connect('app.db')
   con.row_factory = sqlite3.Row
