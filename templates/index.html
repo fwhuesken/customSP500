@@ -2,25 +2,14 @@
 <html>
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <style>
 
-    </style>
+    <style></style>
 
     <body>      
-        <form action="/" method="post">
-          <label>Index</label>
-          <select name="index" id="index" class="form-control" onchange="baselineIndex()">
-            
-            <option value="fractionable">All fractionable equities</option>
-            <option value="sp500">S&P 500</option>
-            <option value="nasdaq100">NASDAQ 100</option>
+        <h1>Build your custom S&P 500</h1>
 
-            <input id=submitIndex type="submit" value="Submit"/>
-          </select>
-        </form>
-<p></p>
 
-                
+
           <label>Sectors</label>
           <select id="sector" class="form-control" onchange="filterSector()">
             <option value="all-sectors">All sectors</option>
@@ -40,13 +29,6 @@
           <label>Search for name</label>
         <input class="form-control" type="text" id="search" onkeyup="searchName()">
 
-        
-
- <p></p>
-  <p></p>
-   <p></p>
-        <h3 id="baselineIndex"></h3>
-
         <h3 id="positionCount"></h3>
 
         <button id="selectAll">Select all</button>
@@ -54,6 +36,8 @@
         <button id="removeAll">Remove  all from selection</button>
 
         <button id="toJSON">Selection to JSON</button>
+
+        <button id="weightSelection">Go to weighting</button>
 
 
 
@@ -63,6 +47,7 @@
                   <th>Symbol</th>
                   <th>Name</th>
                   <th>Sector</th>
+                  <th>Weight in %</th>
                   <th>Include in selection</th>
     <!--              <th>Share in selection</th>   -->
               </tr>
@@ -74,6 +59,7 @@
                <td>{{row["symbol"]}}</td>
                <td>{{row["name"]}}</td>
                <td>{{row["sector"]}}</td>
+               <td>{{row["weight"]}}</td>
                <td><input type="checkbox" class="myCheckbox" id="include" value="include" checked></td>
     <!--         <td><div class="form-group">
                     <div class="input-group mb-3">
@@ -101,6 +87,9 @@
       })
 
       toJSONButton = document.getElementById("toJSON");
+
+      weightSelectionButton = document.getElementById("weightSelection");
+      
 
       function searchName() {
         var input, filter, table, tr, td, i, txtValue;
@@ -149,25 +138,13 @@
               }
             }
 
-      function baselineIndex() {
-        let e = document.getElementById("index");
-        let value = e.options[e.selectedIndex].text;
-        let text =  document.getElementById('baselineIndex');
-        text.innerHTML = value;
-      }
-/*
-      function countPositions () {
-        let table = document.getElementById("portfolio");
-        let rowCount = table.tBodies[0].rows.length;
-        let positionCount = document.getElementById("positionCount")
-        positionCount.innerHTML = rowCount
-      }
-      */
+
       
       function selectAll(){  
               var ele=document.getElementsByTagName('input');  
-              for(var i=0; i<ele.length; i++){  
-                  if(ele[i].type=='checkbox')  
+              for(var i=0; i<ele.length; i++){
+                /* offsetParent checks if checkbox is currently visible */  
+                  if(ele[i].type=='checkbox' && ele[i].offsetParent !== null)  
                       ele[i].checked=true;  
               }  
           }  
@@ -175,42 +152,11 @@
        function deSelect(){  
                 var ele=document.getElementsByTagName('input'); 
                 for(var i=0; i<ele.length; i++){  
-                    if(ele[i].type=='checkbox')  
+                    if(ele[i].type=='checkbox' && ele[i].offsetParent !== null)  
                         ele[i].checked=false;   
                 }  
             }          
-      table = document.getElementById(portfolio)
-      function tableToJson(table) {
-        let data = [];
-
-        // first row needs to be headers
-        let headers = [];
-        for (var i=0; i<table.rows[0].cells.length; i++) {
-            headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi,'');
-        }
-
-        // go through cells
-        for (let i=1; i<table.rows.length; i++) {
-
-            let tableRow = table.rows[i];
-            let rowData = {};
-
-            for (let j=0; j<tableRow.cells.length; j++) {
-
-                rowData[ headers[j] ] = tableRow.cells[j].innerHTML;
-
-            }
-
-            data.push(rowData);
-        }       
-         console.log(data);
-        return data;
-       
-    }
-  
-/*    
-alert(document.querySelectorAll('input[type="checkbox"]:checked').length);
-*/
+      
 
 const checkboxes = document.querySelectorAll(".myCheckbox");
 const label = document.getElementById("positionCount");

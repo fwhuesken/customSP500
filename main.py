@@ -5,46 +5,18 @@ site = Flask(__name__)
 
 @site.route('/', methods=['GET', 'POST'])
 def index():
-  #'fractionable' selected to display data on load. Use 'False' to not display any data
-  index = request.form.get('index', 'fractionable')
+
+
   con = sqlite3.connect('app.db')
   con.row_factory = sqlite3.Row
    
   cur = con.cursor()
-  if index == 'sp500':
-        cur.execute("""
-                SELECT symbol, name, sector
-                FROM sp500
-                ORDER BY name
-                    """)
-  elif index == 'nasdaq100':
-        cur.execute("""
-                SELECT
-                  nasdaq100.symbol,
-                  nasdaq100.name,
-                  sector.sector
-                FROM
-                  nasdaq100 
-                LEFT JOIN sector ON
-                  sector.symbol = nasdaq100.symbol
-                ORDER BY
-                  nasdaq100.name
-                """)
-  elif index == 'fractionable':
-        cur.execute("""
-                SELECT
-                  stock.symbol,
-                  stock.name,
-                  sector.sector
-                FROM
-                  stock 
-                LEFT JOIN  sector ON
-                  sector.symbol = stock.symbol
-                ORDER BY
-                  stock.name
-                """)
   
-  
+  cur.execute("""
+          SELECT symbol, name, sector, weight
+          FROM sp500
+          ORDER BY name
+              """)
   rows = cur.fetchall(); 
   return render_template('index.html',rows = rows)
     
