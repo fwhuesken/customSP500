@@ -49,21 +49,12 @@
 
         <h3 id="positionCount"></h3>
 
-        <button id="selectAll" onclick="selectAll()">Select all</button>
+        <button id="selectAll">Select all</button>
 
-        <button id="removeAll" onclick="deSelect()">Remove  all from selection</button>
+        <button id="removeAll">Remove  all from selection</button>
 
-        <button id="toJSON" onclick="tableToJson(table)">Selection to JSON</button>
+        <button id="toJSON">Selection to JSON</button>
 
- <p></p>
-  <p></p>
-   <p></p>
-    <p></p>
-     <p></p>
-      <p></p>
-       <p></p>
-        <p></p>
-         <p></p>
 
 
         <table id="portfolio" class="table table-hover table-condensed">
@@ -73,7 +64,7 @@
                   <th>Name</th>
                   <th>Sector</th>
                   <th>Include in selection</th>
-                  <th>Share in selection</th>
+    <!--              <th>Share in selection</th>   -->
               </tr>
             </thead>  
             <tbody>
@@ -84,20 +75,33 @@
                <td>{{row["name"]}}</td>
                <td>{{row["sector"]}}</td>
                <td><input type="checkbox" class="myCheckbox" id="include" value="include" checked></td>
-               <td><div class="form-group">
+    <!--         <td><div class="form-group">
                     <div class="input-group mb-3">
                       <input type="number" class="form-control" aria-label="">
                       <div class="input-group-append">
                         <span class="input-group-text">%</span>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
             </tr>
          {% endfor %}
           </tbody>
         </table>
     </body>
   <script>
+      selectAllButton = document.getElementById("selectAll");
+      selectAllButton.addEventListener("click", async function () {
+        selectAll();
+        await countPosition();
+      })
+
+      removeAllButton = document.getElementById("removeAll");
+      removeAllButton.addEventListener("click", function () {
+        deSelect();
+      })
+
+      toJSONButton = document.getElementById("toJSON");
+
       function searchName() {
         var input, filter, table, tr, td, i, txtValue;
         input = document.getElementById("search");
@@ -212,7 +216,7 @@ const checkboxes = document.querySelectorAll(".myCheckbox");
 const label = document.getElementById("positionCount");
 
 const countPosition = checkboxes.forEach((checkbox) => {
-  checkbox.addEventListener("click", () => {
+  checkbox.addEventListener("change", () => {
     let total = 0;
 
     for (let i = 0; i < checkboxes.length; i++) {

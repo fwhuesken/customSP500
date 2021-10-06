@@ -24,7 +24,7 @@ To do:
 - ~~onLoad: all fractionable equities are displayed~~
 - add event listeners instead of using onclick
 - then: countPosition to be called when clicking select all and remove all buttons
-- separate input button from post request
+- separate input button from post request (https://stackoverflow.com/questions/11556958/sending-data-from-html-form-to-a-python-script-in-flask)
 - HTML table to json: https://stackoverflow.com/questions/6271856/html-table-to-json
 
 
