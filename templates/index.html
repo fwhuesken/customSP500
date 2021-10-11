@@ -62,7 +62,7 @@ th {
             <tbody>
             <tr>
                 {% for row in rows %}
-            <tr>
+            
                <td>{{row["symbol"]}}</td>
                <td>{{row["name"]}}</td>
                <td>{{row["sector"]}}</td>
@@ -163,7 +163,7 @@ th {
           let table = document.getElementById("portfolio");
           let tr = table.getElementsByTagName("tr");
           let totalWeight = 0;
-            for(var i=2; i < ele.length; i++){
+            for(var i=1; i < ele.length; i++){
               let td = tr[i].getElementsByTagName("td")[3];
               let price = parseFloat(td.innerText);
               if(ele[i].type=='checkbox' && ele[i].checked == true)
