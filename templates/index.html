@@ -125,8 +125,8 @@ th {
         table = document.getElementById("portfolio");
         tr = table.getElementsByTagName("tr");
         positionCount = document.getElementById("positionCount");
-        /* minus 2 for header and for loop */
-        positionCount.innerHTML = "Currently selected number of positions: " + (tr.length - 2);
+        /* minus 1 for header */
+        positionCount.innerHTML = "Currently selected number of positions: " + (tr.length - 1);
       }
 
       totalPositions();
