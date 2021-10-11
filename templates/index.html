@@ -3,7 +3,12 @@
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <style></style>
+    <style>
+th {
+  cursor: pointer;
+}
+
+    </style>
 
     <body>      
         <h1>Build your custom S&P 500</h1>
@@ -49,7 +54,7 @@
                   <th>Symbol</th>
                   <th>Name</th>
                   <th>Sector</th>
-                  <th>Weight in %</th>
+                  <th onclick="sortTable()">Weight in %</th>
                   <th>Include in selection</th>
     <!--              <th>Share in selection</th>   -->
               </tr>
@@ -177,6 +182,42 @@
                 }  
             }          
       
+
+      function sortTable() {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("portfolio");
+  switching = true;
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 2; i < (rows.length - 2); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("TD")[3];
+      y = rows[i + 1].getElementsByTagName("TD")[3];
+      //check if the two rows should switch place:
+      if (Number(x.innerHTML) > Number(y.innerHTML)) {
+        //if so, mark as a switch and break the loop:
+        shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+
 
 const checkboxes = document.querySelectorAll(".myCheckbox");
 const label = document.getElementById("positionCount");

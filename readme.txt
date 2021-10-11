@@ -1,7 +1,7 @@
 To do:
 https://www.slickcharts.com/sp500
 
-- Enable sorting: https://www.w3schools.com/howto/howto_js_sort_table.asp
+- Enable sorting: https://www.w3schools.com/howto/howto_js_sort_table.asp (funktioniert, ist aber extrem langsam)
 
 - market weighting:
   - a = remaining weight
