@@ -11,7 +11,6 @@ https://www.slickcharts.com/sp500
   - a' = a*b
 
 **Next steps**
-- **WHY DOES IT PICK THE VALUE IN THE ROW BELOW TO CALCULATE THE DIFFERENCE TO TOTAL WEIGHT???**
 - add another column next to weight in % with the current weight of each stock that is checked
 - calculate minimum investment in realtime 
 - display number of positions, minimum investment in realtime
