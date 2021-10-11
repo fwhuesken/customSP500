@@ -54,7 +54,7 @@ th {
                   <th>Symbol</th>
                   <th>Name</th>
                   <th>Sector</th>
-                  <th style="display:none">Weight in %</th>
+                  <th>Weight in %</th>
                   <th>Include in selection</th>
     <!--              <th>Share in selection</th>   -->
               </tr>
@@ -66,7 +66,7 @@ th {
                <td>{{row["symbol"]}}</td>
                <td>{{row["name"]}}</td>
                <td>{{row["sector"]}}</td>
-               <td style="display:none;">{{row["weight"]}}</td>
+               <td>{{row["weight"]}}</td>
                <td><input type="checkbox" class="myCheckbox" id="include" value="include" checked></td>
     <!--         <td><div class="form-group">
                     <div class="input-group mb-3">
@@ -157,13 +157,25 @@ th {
               }
             }
 
+      
       function weighting() {
-        const table = document.getElementById("portfolio");
-        let subTotal = Array.from(table.rows).slice(3).reduce((total, row) => {
-    return total + parseFloat(row.cells[3].innerHTML);
-  }, 0);
-  document.getElementById("val").innerHTML = "SubTotal = $" + subTotal.toFixed(2);
+          const ele = document.getElementsByTagName('input');
+          let table = document.getElementById("portfolio");
+          let tr = table.getElementsByTagName("tr");
+          let totalWeight = 0;
+            for(var i=2; i < ele.length; i++){
+              let td = tr[i].getElementsByTagName("td")[3];
+              let price = parseFloat(td.innerText);
+              if(ele[i].type=='checkbox' && ele[i].checked == true)
+                totalWeight += price;          
+        
+            }
+        document.getElementById("val").innerHTML = "Total weight is: " + totalWeight.toFixed(2);
+
       }
+      
+      
+      
       
       function selectAll(){  
               var ele=document.getElementsByTagName('input');  
@@ -172,6 +184,7 @@ th {
                   if(ele[i].type=='checkbox' && ele[i].offsetParent !== null)  
                       ele[i].checked=true;  
               }  
+              weighting();
           }  
 
        function deSelect(){  
@@ -180,6 +193,7 @@ th {
                     if(ele[i].type=='checkbox' && ele[i].offsetParent !== null)  
                         ele[i].checked=false;   
                 }  
+                weighting();
             }          
       
 
