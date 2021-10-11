@@ -30,6 +30,8 @@
         <input class="form-control" type="text" id="search" onkeyup="searchName()">
 
         <h3 id="positionCount"></h3>
+        <span id="val"></span>
+
 
         <button id="selectAll">Select all</button>
 
@@ -89,6 +91,9 @@
       toJSONButton = document.getElementById("toJSON");
 
       weightSelectionButton = document.getElementById("weightSelection");
+      weightSelectionButton.addEventListener("click", function () {
+        weighting();
+      })
       
 
       function searchName() {
