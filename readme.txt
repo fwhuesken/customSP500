@@ -13,10 +13,9 @@ https://www.slickcharts.com/sp500
 **Next steps**
 - tackle weighting by using filterSector as a blueprint
 - add another column to display previous weight? or hide column but include value to calculate weights in realtime?
-- ask stackoverflow about count positions
-- return to flask: key-value pair of symbol and scaled weight: https://stackoverflow.com/questions/58109941/how-to-return-list-of-values-selected-in-dropdown-using-flask-and-html
 
+- return to flask: key-value pair of symbol and scaled weight: https://stackoverflow.com/questions/58109941/how-to-return-list-of-values-selected-in-dropdown-using-flask-and-html
 - rewrite main.py to accept key:value pair instead of json
-- rewrite position count...
+
 
 filter by industry: https://en.wikipedia.org/wiki/List_of_S%26P_500_companies

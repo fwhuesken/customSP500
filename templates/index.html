@@ -77,6 +77,7 @@
         </table>
     </body>
   <script>
+
       selectAllButton = document.getElementById("selectAll");
       selectAllButton.addEventListener("click", async function () {
         selectAll();
@@ -115,7 +116,15 @@
           }
         }
       }
+      function totalPositions() {
+        table = document.getElementById("portfolio");
+        tr = table.getElementsByTagName("tr");
+        positionCount = document.getElementById("positionCount");
+        /* minus 2 for header and for loop */
+        positionCount.innerHTML = "Currently selected number of positions: " + (tr.length - 2);
+      }
 
+      totalPositions();
       
       function filterSector() {
           var input, filter, table, tr, td, i, txtValue;
@@ -143,7 +152,13 @@
               }
             }
 
-
+      function weighting() {
+        const table = document.getElementById("portfolio");
+        let subTotal = Array.from(table.rows).slice(3).reduce((total, row) => {
+    return total + parseFloat(row.cells[3].innerHTML);
+  }, 0);
+  document.getElementById("val").innerHTML = "SubTotal = $" + subTotal.toFixed(2);
+      }
       
       function selectAll(){  
               var ele=document.getElementsByTagName('input');  
@@ -177,7 +192,7 @@ const countPosition = checkboxes.forEach((checkbox) => {
       }
     }
 
-    label.innerHTML = total;
+    label.innerHTML = "Currently selected number of positions: " + total;
   });
 });
     </script>
