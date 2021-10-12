@@ -11,8 +11,10 @@ https://www.slickcharts.com/sp500
   - a' = a*b
 
 **Next steps**
-- add another column next to weight in % with the current weight of each stock that is checked
-- calculate minimum investment in realtime 
+
+- calculate minimum investment in realtime: you know a & b now
+- find smallest weight
+- minimum investment = 1/smallest weight
 - display number of positions, minimum investment in realtime
 
 - return to flask: key-value pair of symbol and scaled weight: https://stackoverflow.com/questions/58109941/how-to-return-list-of-values-selected-in-dropdown-using-flask-and-html

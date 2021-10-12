@@ -54,7 +54,8 @@ th {
                   <th>Symbol</th>
                   <th>Name</th>
                   <th>Sector</th>
-                  <th>Weight in %</th>
+                  <th>Index weight</th>
+                  <th>Custom ETF weight
                   <th>Include in selection</th>
     <!--              <th>Share in selection</th>   -->
               </tr>
@@ -67,6 +68,7 @@ th {
                <td>{{row["name"]}}</td>
                <td>{{row["sector"]}}</td>
                <td>{{row["weight"]}}</td>
+               <td></td>
                <td><input type="checkbox" class="myCheckbox" id="include" value="include" checked></td>
     <!--         <td><div class="form-group">
                     <div class="input-group mb-3">
@@ -98,7 +100,7 @@ th {
 
       weightSelectionButton = document.getElementById("weightSelection");
       weightSelectionButton.addEventListener("click", function () {
-        weighting();
+        totalWeight();
       })
       
 
@@ -158,7 +160,7 @@ th {
             }
 
       
-      function weighting() {
+      function totalWeight() {
           const ele = document.getElementsByTagName('input');
           let table = document.getElementById("portfolio");
           let tr = table.getElementsByTagName("tr");
@@ -193,7 +195,7 @@ th {
                     if(ele[i].type=='checkbox' && ele[i].offsetParent !== null)  
                         ele[i].checked=false;   
                 }  
-                weighting();
+                totalWeight();
             }          
       
 
