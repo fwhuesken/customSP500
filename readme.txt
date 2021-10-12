@@ -5,17 +5,16 @@ https://www.slickcharts.com/sp500
 
 - market weighting:
   - a = remaining weight
-  - ∑a = sum of all remaining weights
+  - ∑a = sum of all remaining weights (calculated by totalWeight() ) 
   - b = scaling factor
   - **b = 100/∑a**
   - a' = a*b
 
 **Next steps**
-
-- calculate minimum investment in realtime: you know a & b now
-- find smallest weight
-- minimum investment = 1/smallest weight
-- display number of positions, minimum investment in realtime
+- move function that counts positions from inside the checkbox event listener to outside, so that buttons can call it
+- find smallest weight (maybe here: https://stackoverflow.com/questions/4029373/find-minimum-value-in-a-column)
+- minimum investment = 1/smallest weight is wrong - what's the right formula???
+- display number of positions, minimum investment ~~in realtime~~ after clicking weighting
 
 - return to flask: key-value pair of symbol and scaled weight: https://stackoverflow.com/questions/58109941/how-to-return-list-of-values-selected-in-dropdown-using-flask-and-html
 - rewrite main.py to accept key:value pair instead of json

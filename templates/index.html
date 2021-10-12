@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html>
-    
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <style>
-th {
-  cursor: pointer;
-}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+ crossorigin="anonymous">
 
-    </style>
+<style>
+	th {
+		cursor: pointer;
+	}
+</style>
 
-    <body>      
-        <h1>Build your custom S&P 500</h1>
+<body>
+	<h1>Build your custom S&P 500</h1>
 
 
 
-          <label>Sectors</label>
+	<label>Sectors</label>
           <select id="sector" class="form-control" onchange="filterSector()">
             <option value="all-sectors">All sectors</option>
             <option>Industrials</option>
@@ -44,7 +44,7 @@ th {
 
         <!-- <button id="toJSON">Selection to JSON</button> -->
 
-        <button id="weightSelection">Go to weighting</button>
+        <button id="weightSelection">Calculate custom ETF</button>
 
 
 
@@ -92,15 +92,17 @@ th {
       })
 
       removeAllButton = document.getElementById("removeAll");
-      removeAllButton.addEventListener("click", function () {
+      removeAllButton.addEventListener("click", async function () {
         deSelect();
+        await countPosition();
       })
 
       toJSONButton = document.getElementById("toJSON");
 
       weightSelectionButton = document.getElementById("weightSelection");
       weightSelectionButton.addEventListener("click", function () {
-        totalWeight();
+        let totalWeight = sumUpWeights();
+        positionWeight(totalWeight);
       })
       
 
@@ -160,22 +162,43 @@ th {
             }
 
       
-      function totalWeight() {
+      function sumUpWeights() {
           const ele = document.getElementsByTagName('input');
           let table = document.getElementById("portfolio");
           let tr = table.getElementsByTagName("tr");
-          let totalWeight = 0;
+          let total = 0;
             for(var i=1; i < ele.length; i++){
               let td = tr[i].getElementsByTagName("td")[3];
               let price = parseFloat(td.innerText);
               if(ele[i].type=='checkbox' && ele[i].checked == true)
-                totalWeight += price;          
+                total += price;          
         
             }
-        document.getElementById("val").innerHTML = "Total weight is: " + totalWeight.toFixed(2);
+        document.getElementById("val").innerHTML = "Total weight is: " + total.toFixed(2);
+        return total;
 
       }
+
       
+
+      function positionWeight(totalWeight) {
+        let scalar = 100/totalWeight;
+        const ele = document.getElementsByTagName('input');
+          let table = document.getElementById("portfolio");
+          let tr = table.getElementsByTagName("tr");
+
+            for(var i=1; i < ele.length; i++){
+              let index = tr[i].getElementsByTagName("td")[3];
+              let custom = tr[i].getElementsByTagName("td")[4];
+              let indexWeight = parseFloat(index.innerText);
+              if(ele[i].type=='checkbox' && ele[i].checked == true)
+                custom.innerText = (indexWeight * scalar).toFixed(6);
+              else 
+                custom.innerText = 0;         
+        
+            }
+
+      }
       
       
       
@@ -186,7 +209,7 @@ th {
                   if(ele[i].type=='checkbox' && ele[i].offsetParent !== null)  
                       ele[i].checked=true;  
               }  
-              weighting();
+              sumUpWeights();
           }  
 
        function deSelect(){  
@@ -195,7 +218,7 @@ th {
                     if(ele[i].type=='checkbox' && ele[i].offsetParent !== null)  
                         ele[i].checked=false;   
                 }  
-                totalWeight();
+                sumUpWeights();
             }          
       
 
@@ -240,7 +263,7 @@ const label = document.getElementById("positionCount");
 
 const countPosition = checkboxes.forEach((checkbox) => {
   checkbox.addEventListener("change", () => {
-    weighting();
+    sumUpWeights();
     let total = 0;
 
     for (let i = 0; i < checkboxes.length; i++) {
