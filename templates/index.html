@@ -261,11 +261,15 @@
 const checkboxes = document.querySelectorAll(".myCheckbox");
 const label = document.getElementById("positionCount");
 
-const countPosition = checkboxes.forEach((checkbox) => {
+const eventCheckbox = checkboxes.forEach((checkbox) => {
   checkbox.addEventListener("change", () => {
     sumUpWeights();
-    let total = 0;
+    countPosition();
+  });
+});
 
+function countPosition() {
+    let total = 0;
     for (let i = 0; i < checkboxes.length; i++) {
       const currentCheckbox = checkboxes[i];
       if (currentCheckbox.checked) {
@@ -274,7 +278,8 @@ const countPosition = checkboxes.forEach((checkbox) => {
     }
 
     label.innerHTML = "Currently selected number of positions: " + total;
-  });
-});
+  
+}
+
     </script>
 </html>
