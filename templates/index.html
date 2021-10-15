@@ -5,15 +5,11 @@
  crossorigin="anonymous">
 
 <style>
-	th {
-		cursor: pointer;
-	}
+
 </style>
 
 <body>
 	<h1>Build your custom S&P 500</h1>
-
-
 
 	<label>Sectors</label>
           <select id="sector" class="form-control" onchange="filterSector()">
@@ -32,21 +28,18 @@
           </select>
           <p></p>
           <label>Search for name</label>
-        <input class="form-control" type="text" id="search" onkeyup="searchName()">
-
-        <h3 id="positionCount"></h3>
-        <span id="val"></span>
-
+        <input class="form-control" type="text" id="search" onkeyup="searchName()"><p></p>
 
         <button id="selectAll">Select all</button>
+        <button id="removeAll">Remove  all from selection</button><p></p>
+        
+        <span id="positionCount"></span><p></p>
+        <span id="sumOfWeights"></span><p></p>
+        <span id="smWeight">Smallest weight: </span><p></p>
+        <span id="mrktInvest">Minimum investment with market cap weighting:</span><p></p>
+        <span id="eqInvest">Minimum investment with equal weighting:</span><p></p>
 
-        <button id="removeAll">Remove  all from selection</button>
-
-        <!-- <button id="toJSON">Selection to JSON</button> -->
-
-        <button id="weightSelection">Calculate custom ETF</button>
-
-
+        <button id="weightSelection">Calculate custom ETF</button><p></p>
 
         <table id="portfolio" class="table table-hover table-condensed">
             <thead>
@@ -55,7 +48,7 @@
                   <th>Name</th>
                   <th>Sector</th>
                   <th>Index weight</th>
-                  <th>Custom ETF weight
+                  <th>Custom ETF weight</th>
                   <th>Include in selection</th>
     <!--              <th>Share in selection</th>   -->
               </tr>
@@ -86,15 +79,15 @@
   <script>
 
       selectAllButton = document.getElementById("selectAll");
-      selectAllButton.addEventListener("click", async function () {
+      selectAllButton.addEventListener("click", function () {
         selectAll();
-        await countPosition();
+        countPosition();
       })
 
       removeAllButton = document.getElementById("removeAll");
-      removeAllButton.addEventListener("click", async function () {
+      removeAllButton.addEventListener("click", function () {
         deSelect();
-        await countPosition();
+        countPosition();
       })
 
       toJSONButton = document.getElementById("toJSON");
@@ -103,9 +96,12 @@
       weightSelectionButton.addEventListener("click", function () {
         let totalWeight = sumUpWeights();
         positionWeight(totalWeight);
+        let smallest = smallestWeight();
+        let numPositions = countPosition();
+        minimumInvestment(smallest, numPositions);
+
       })
       
-
       function searchName() {
         var input, filter, table, tr, td, i, txtValue;
         input = document.getElementById("search");
@@ -125,6 +121,7 @@
           }
         }
       }
+
       function totalPositions() {
         table = document.getElementById("portfolio");
         tr = table.getElementsByTagName("tr");
@@ -132,7 +129,6 @@
         /* minus 1 for header */
         positionCount.innerHTML = "Currently selected number of positions: " + (tr.length - 1);
       }
-
       totalPositions();
       
       function filterSector() {
@@ -161,7 +157,6 @@
               }
             }
 
-      
       function sumUpWeights() {
           const ele = document.getElementsByTagName('input');
           let table = document.getElementById("portfolio");
@@ -174,12 +169,10 @@
                 total += price;          
         
             }
-        document.getElementById("val").innerHTML = "Total weight is: " + total.toFixed(2);
+        document.getElementById("sumOfWeights").innerHTML = "Total weight: " + total.toFixed(2) + "%";
         return total;
-
       }
-
-      
+      sumUpWeights();
 
       function positionWeight(totalWeight) {
         let scalar = 100/totalWeight;
@@ -192,15 +185,11 @@
               let custom = tr[i].getElementsByTagName("td")[4];
               let indexWeight = parseFloat(index.innerText);
               if(ele[i].type=='checkbox' && ele[i].checked == true)
-                custom.innerText = (indexWeight * scalar).toFixed(6);
+                custom.innerText = (indexWeight * scalar).toFixed(2);
               else 
                 custom.innerText = 0;         
-        
             }
-
       }
-      
-      
       
       function selectAll(){  
               var ele=document.getElementsByTagName('input');  
@@ -210,6 +199,7 @@
                       ele[i].checked=true;  
               }  
               sumUpWeights();
+              smallestWeight();
           }  
 
        function deSelect(){  
@@ -219,67 +209,54 @@
                         ele[i].checked=false;   
                 }  
                 sumUpWeights();
+                document.getElementById("smWeight").innerHTML = "Smallest weight: 0.00%"
             }          
       
+      const checkboxes = document.querySelectorAll(".myCheckbox");
+      const label = document.getElementById("positionCount");
 
-      function sortTable() {
-  var table, rows, switching, i, x, y, shouldSwitch;
-  table = document.getElementById("portfolio");
-  switching = true;
-  /*Make a loop that will continue until
-  no switching has been done:*/
-  while (switching) {
-    //start by saying: no switching is done:
-    switching = false;
-    rows = table.rows;
-    /*Loop through all table rows (except the
-    first, which contains table headers):*/
-    for (i = 2; i < (rows.length - 2); i++) {
-      //start by saying there should be no switching:
-      shouldSwitch = false;
-      /*Get the two elements you want to compare,
-      one from current row and one from the next:*/
-      x = rows[i].getElementsByTagName("TD")[3];
-      y = rows[i + 1].getElementsByTagName("TD")[3];
-      //check if the two rows should switch place:
-      if (Number(x.innerHTML) > Number(y.innerHTML)) {
-        //if so, mark as a switch and break the loop:
-        shouldSwitch = true;
-        break;
+      const eventCheckbox = checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+          //sumUpWeights();
+          countPosition();
+        });
+      });
+
+      function countPosition() {
+          let total = 0;
+          for (let i = 0; i < checkboxes.length; i++) {
+            const currentCheckbox = checkboxes[i];
+            if (currentCheckbox.checked) {
+              total += 1;
+            }
+          }
+          label.innerHTML = "Currently selected number of positions: " + total;
+          return total;
       }
-    }
-    if (shouldSwitch) {
-      /*If a switch has been marked, make the switch
-      and mark that a switch has been done:*/
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-    }
-  }
-}
 
-
-const checkboxes = document.querySelectorAll(".myCheckbox");
-const label = document.getElementById("positionCount");
-
-const eventCheckbox = checkboxes.forEach((checkbox) => {
-  checkbox.addEventListener("change", () => {
-    sumUpWeights();
-    countPosition();
-  });
-});
-
-function countPosition() {
-    let total = 0;
-    for (let i = 0; i < checkboxes.length; i++) {
-      const currentCheckbox = checkboxes[i];
-      if (currentCheckbox.checked) {
-        total += 1;
+      function smallestWeight() {
+        let values = [];
+        const ele = document.getElementsByTagName('input');
+        let table = document.getElementById("portfolio");
+        let trs = table.getElementsByTagName("tr");
+        for(  i = 0, len = trs.length; i < len; i++ ) {
+          if(ele[i].type=='checkbox' && ele[i].checked == true) {
+            values.push( parseFloat( trs[ i ].cells[ 4 ].innerHTML ) );
+          }
+        }
+      
+      let smallest = Math.min.apply( null, values );
+      document.getElementById("smWeight").innerHTML = "Smallest weight: " + smallest.toFixed(2) + "%";
+      return smallest;
+        }
+      
+      function minimumInvestment(smallest, numPositions) {
+        //let minInvest = 0;
+        let scalar = (1 / smallest);
+        minInvest = (100-smallest) * scalar + 1;
+        
+        document.getElementById("mrktInvest").innerHTML = "Minimum investment with market cap weighting: $" + minInvest.toFixed(2);
+        document.getElementById("eqInvest").innerHTML = "Minimum investment with equal weighting: $" + numPositions.toFixed(2);
       }
-    }
-
-    label.innerHTML = "Currently selected number of positions: " + total;
-  
-}
-
     </script>
 </html>

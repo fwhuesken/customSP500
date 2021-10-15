@@ -11,15 +11,15 @@ https://www.slickcharts.com/sp500
   - a' = a*b
 
 **Next steps**
-- move function that counts positions from inside the checkbox event listener to outside, so that buttons can call it
-- find smallest weight (maybe here: https://stackoverflow.com/questions/4029373/find-minimum-value-in-a-column)
-- minimum investment = 1/smallest weight is wrong - what's the right formula???
+
 - display number of positions, minimum investment ~~in realtime~~ after clicking weighting
 
-- return to flask: key-value pair of symbol and scaled weight: https://stackoverflow.com/questions/58109941/how-to-return-list-of-values-selected-in-dropdown-using-flask-and-html
+- return to flask: key-value pair of symbol and ~~scaled weight~~investment per position: https://stackoverflow.com/questions/58109941/how-to-return-list-of-values-selected-in-dropdown-using-flask-and-html
 - rewrite main.py to accept key:value pair instead of json
 
 
 filter by industry: https://en.wikipedia.org/wiki/List_of_S%26P_500_companies
 
 **minimum investment**
+- scalar = largest weight / smallestWeight
+- minimum investment = numPositions * scalar
