@@ -41,7 +41,7 @@
 
         <button id="weightSelection">Calculate custom ETF</button><p></p>
         <button id="toJSON">Generate JSON file</button>
-
+        <!--To hide tag add style="display:none;" -->
         <table id="portfolio" class="table table-hover table-condensed">
             <thead>
               <tr>
@@ -50,6 +50,7 @@
                   <th>Sector</th>
                   <th>Index weight</th>
                   <th>Custom ETF weight</th>
+                  <th>Minimum investment</th>
                   <th>Include in selection</th>
     <!--              <th>Share in selection</th>   -->
               </tr>
@@ -62,7 +63,8 @@
                <td>{{row["name"]}}</td>
                <td>{{row["sector"]}}</td>
                <td>{{row["weight"]}}</td>
-               <td></td>
+               <td id="TDcustometfweight"></td>
+               <td id="TDminInvest"></td>
                <td><input type="checkbox" class="myCheckbox" id="include" value="include" checked></td>
     <!--         <td><div class="form-group">
                     <div class="input-group mb-3">
@@ -265,32 +267,32 @@
       }
 
       let table = document.getElementById("portfolio");
-    function tableToJson(table) {
-    let data = [];
-    const ele = document.getElementsByTagName('input');
-    // first row needs to be headers
-    let headers = [];
-    for ( i=0; i<table.rows[0].cells.length; i++) {
-        headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi,'');
-    }
-
-    // go through cells
-    for ( i=1; i<table.rows.length; i++) {
-      if(ele[i].type=='checkbox' && ele[i].checked == true) {
-        let tableRow = table.rows[i];
-        let rowData = {};
-
-        for ( j=0; j<tableRow.cells.length; j++) {
-
-            rowData[ headers[j] ] = tableRow.cells[j].innerHTML;
-
-        }
-      
-        data.push(rowData);
+      function tableToJson(table) {
+      let data = [];
+      const ele = document.getElementsByTagName('input');
+      // first row needs to be headers
+      let headers = [];
+      for ( i=0; i<table.rows[0].cells.length; i++) {
+          headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi,'');
       }
-    }       
-    console.log(data);
-    return data;
-}
+
+      // go through cells
+      for ( i=1; i<table.rows.length; i++) {
+        if(ele[i].type=='checkbox' && ele[i].checked == true) {
+          let tableRow = table.rows[i];
+          let rowData = {};
+
+          for ( j=0; j<tableRow.cells.length; j++) {
+
+              rowData[ headers[j] ] = tableRow.cells[j].innerHTML;
+
+          }
+        
+          data.push(rowData);
+        }
+      }       
+      console.log(data);
+      return data;
+  }
     </script>
 </html>
