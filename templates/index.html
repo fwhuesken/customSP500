@@ -264,6 +264,21 @@
         
         document.getElementById("mrktInvest").innerHTML = "Minimum investment with market cap weighting: $" + minInvest.toFixed(2);
         document.getElementById("eqInvest").innerHTML = "Minimum investment with equal weighting: $" + numPositions.toFixed(2);
+
+        const ele = document.getElementsByTagName('input');
+          let table = document.getElementById("portfolio");
+          let tr = table.getElementsByTagName("tr");
+
+            for(var i=1; i < ele.length; i++){
+              let custom = tr[i].getElementsByTagName("td")[4];
+              let customWeight = parseFloat(custom.innerText);
+              let minimum = tr[i].getElementsByTagName("td")[5];
+              if(ele[i].type=='checkbox' && ele[i].checked == true)
+                minimum.innerText = "$" + (customWeight * scalar).toFixed(2);
+              else 
+                minimum.innerText = "$0";         
+            }
+
       }
 
       let table = document.getElementById("portfolio");
@@ -294,5 +309,9 @@
       console.log(data);
       return data;
   }
+
+
+
+
     </script>
 </html>
