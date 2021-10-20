@@ -223,8 +223,16 @@
 
       toJSONButton = document.getElementById("toJSON");
       toJSONButton.addEventListener("click", function () {
+        const url = '/data';
         const table = document.getElementById("portfolio");
-        tableToJson(table);
+        const tableData = tableToJson(table);
+        fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(tableData)
+          })
+          .then(resp => resp.json())
+          .then(data => console.log(data));
       })
 
       weightSelectionButton = document.getElementById("weightSelection");
