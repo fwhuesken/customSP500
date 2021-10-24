@@ -1,7 +1,7 @@
 import config
 import json
 import alpaca_trade_api as tradeapi
-import selection
+import main
 
 #Set up connection to Alpaca
 api = tradeapi.REST(config.API_KEY, config.SECRET_KEY, base_url=config.API_URL)
@@ -19,26 +19,7 @@ api.cancel_all_orders()
 portfolio = api.list_positions()
 #print(portfolio)
 
-#Making sure that I can convert csv to json
-data_file = 'etf/meta_etf.csv'
-selection = selection.get_json(data_file)
-#print(selection_json)
-
-
-#JSON: Check if the chosen stocks are actually fractionable
-def final_selection():
-  with open('etf/meta_etf.json') as f:    
-    data = json.load(f)
-    for key in list(data.keys()):
-      fractional_asset = api.get_asset(key)
-      if not fractional_asset.fractionable:
-        del data[key]
-    return data 
-     #Parsing weight 
-    #for key in data.keys():
-      #print(data[key]['weight'])
-
-etf = final_selection()
+etf = main.data
 #print(etf)
 
 #Check buying power
@@ -47,24 +28,21 @@ cash = round(float(account.buying_power), 2)
 #print(f"My buying power is {cash}")
 
 def buy():
-  if cash < len(etf):
-    print(f"There are {len(etf)} positions in your ETF. With your current cash balance of ${cash} (not including open orders) you fail to reach the minimum order of $1 per position")
-  else:
     for key in etf.keys():
-      weight = float(etf[key]['weight'])
-      notional = round(cash * weight,2)
+      minimuminvestment = etf[key]['minimuminvestment']
+      #remove $ sign, then turn string to float
+      minString = minimuminvestment[1:]
+      notional = float(minString)
       stock = etf[key]['symbol']
-      if notional < 1:
-        print(f"Order for {stock} not possible, weight too low to reach minimum order size of $1 per position")
-      else:
-        api.submit_order(
+
+      api.submit_order(
         symbol=stock,
         notional=notional,
         side='buy',
         type='market',
         time_in_force='day')
       print((f"Submitted order for {stock} for ${notional}"))
-  return
+    return
 
 #Execute it
 buy()

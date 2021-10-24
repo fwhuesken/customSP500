@@ -2,7 +2,7 @@ import sqlite3
 import pandas as pd
 
 # load data
-df = pd.read_csv('etf/sp500_weights.csv')
+df = pd.read_csv('etf/sp500-weights-industries.csv', sep=";")
 
 # strip whitespace from headers
 df.columns = df.columns.str.strip()

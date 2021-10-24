@@ -2,6 +2,6 @@ To do:
 https://www.slickcharts.com/sp500
 
 **Next steps**
-- return to flask: json object (setup in separate repl works, implement it here)
-- filter by industry (set sectors to all and vice versa whenever used?)
+- combine filter by sector and industry. right now, "all industries" / "all sectors" overwrite the other filter
+- Execute trade.py 
 

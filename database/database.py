@@ -16,6 +16,7 @@ cursor.execute("""
      symbol TEXT NOT NULL UNIQUE,
      name TEXT NOT NULL,
      sector TEXT,
+     industry TEXT,
      weight REAL
   )
 """)

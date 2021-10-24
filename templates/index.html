@@ -176,6 +176,7 @@
                   <th>Symbol</th>
                   <th>Name</th>
                   <th>Sector</th>
+                  <th>Industry</th>
                   <th>Index weight</th>
                   <th>Custom ETF weight</th>
                   <th>Minimum investment</th>
@@ -190,6 +191,7 @@
                <td>{{row["symbol"]}}</td>
                <td>{{row["name"]}}</td>
                <td>{{row["sector"]}}</td>
+               <td>{{row["industry"]}}</td>
                <td>{{row["weight"]}}</td>
                <td id="TDcustometfweight"></td>
                <td id="TDminInvest"></td>
@@ -232,7 +234,8 @@
             body: JSON.stringify(tableData)
           })
           .then(resp => resp.json())
-          .then(data => console.log(data));
+          //.then(data => console.log(data))
+          ;
       })
 
       weightSelectionButton = document.getElementById("weightSelection");
@@ -300,13 +303,39 @@
               }
             }
 
+      function filterIndustry() {
+          var input, filter, table, tr, td, i, txtValue;
+          input = document.getElementById("industry");
+          filter = input.value;
+          table = document.getElementById("portfolio");
+          tr = table.getElementsByTagName("tr");
+          console.log(filter)
+
+          // Loop through all table rows, and hide those who don't match the search query
+        
+              for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[3];
+                if (td) {
+                  txtValue = td.innerText;
+                  if (input.value == "all-industries") {
+                      tr[i].style.display = "";
+                  }
+                    else if (txtValue.indexOf(filter) > -1) {
+                      tr[i].style.display = "";
+                    } else {
+                      tr[i].style.display = "none";
+                    }
+                }
+              }
+            }
+
       function sumUpWeights() {
           const ele = document.getElementsByTagName('input');
           let table = document.getElementById("portfolio");
           let tr = table.getElementsByTagName("tr");
           let total = 0;
             for(var i=1; i < ele.length; i++){
-              let td = tr[i].getElementsByTagName("td")[3];
+              let td = tr[i].getElementsByTagName("td")[4];
               let price = parseFloat(td.innerText);
               if(ele[i].type=='checkbox' && ele[i].checked == true)
                 total += price;          
@@ -315,7 +344,7 @@
         document.getElementById("sumOfWeights").innerHTML = "Total weight: " + total.toFixed(2) + "%";
         return total;
       }
-      sumUpWeights();
+
 
       function positionWeight(totalWeight) {
         let scalar = 100/totalWeight;
@@ -324,8 +353,8 @@
           let tr = table.getElementsByTagName("tr");
 
             for(var i=1; i < ele.length; i++){
-              let index = tr[i].getElementsByTagName("td")[3];
-              let custom = tr[i].getElementsByTagName("td")[4];
+              let index = tr[i].getElementsByTagName("td")[4];
+              let custom = tr[i].getElementsByTagName("td")[5];
               let indexWeight = parseFloat(index.innerText);
               if(ele[i].type=='checkbox' && ele[i].checked == true)
                 custom.innerText = (indexWeight * scalar).toFixed(2);
@@ -364,7 +393,7 @@
           countPosition();
         });
       });
-
+//Counts number of selected positions. Used to calculate minimum investment with equal weighting
       function countPosition() {
           let total = 0;
           for (let i = 0; i < checkboxes.length; i++) {
@@ -376,7 +405,7 @@
           label.innerHTML = "Currently selected number of positions: " + total;
           return total;
       }
-
+//Find the smallest weight of the selection. Used to calculate minimum investment with market weighting
       function smallestWeight() {
         let values = [];
         const ele = document.getElementsByTagName('input');
@@ -384,15 +413,16 @@
         let trs = table.getElementsByTagName("tr");
         for(  i = 0, len = trs.length; i < len; i++ ) {
           if(ele[i].type=='checkbox' && ele[i].checked == true) {
-            values.push( parseFloat( trs[ i ].cells[ 4 ].innerHTML ) );
+            values.push( parseFloat( trs[ i ].cells[ 5 ].innerHTML ) );
           }
         }
       
-      let smallest = Math.min.apply( null, values );
-      document.getElementById("smWeight").innerHTML = "Smallest weight: " + smallest.toFixed(2) + "%";
-      return smallest;
-        }
-      
+        let smallest = Math.min.apply( null, values );
+        document.getElementById("smWeight").innerHTML = "Smallest weight: " + smallest.toFixed(2) + "%";
+        return smallest;
+          }
+
+//Takes the smallest weight to calculate minimum investment at market cap weighting. For equal weighting, it uses number of positions in selection * $1
       function minimumInvestment(smallest, numPositions) {
         //let minInvest = 0;
         let scalar = (1 / smallest);
@@ -406,9 +436,9 @@
           let tr = table.getElementsByTagName("tr");
 
             for(var i=1; i < ele.length; i++){
-              let custom = tr[i].getElementsByTagName("td")[4];
+              let custom = tr[i].getElementsByTagName("td")[5];
               let customWeight = parseFloat(custom.innerText);
-              let minimum = tr[i].getElementsByTagName("td")[5];
+              let minimum = tr[i].getElementsByTagName("td")[6];
               if(ele[i].type=='checkbox' && ele[i].checked == true)
                 minimum.innerText = "$" + (customWeight * scalar).toFixed(2);
               else 
@@ -416,7 +446,7 @@
             }
 
       }
-
+//Turns table into JSON file used by server to trade. Should be triggered by a BUY button
       let table = document.getElementById("portfolio");
       function tableToJson(table) {
       let data = [];
