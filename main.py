@@ -19,15 +19,7 @@ def index():
   rows = cur.fetchall(); 
   return render_template('index.html',rows = rows)
 
-#Let's treat this as the buy function - what would it look like?
-@site.route('/data', methods=['POST']) 
-def parse_request(): 
-    data = request.get_json()
-    print(data)
-    return jsonify(success=True)
-    buy()
 
-site.run(host='0.0.0.0', port=8080)
 
 #Set up connection to Alpaca
 api = tradeapi.REST(config.API_KEY, config.SECRET_KEY, base_url=config.API_URL)
@@ -44,7 +36,7 @@ api.cancel_all_orders()
 #If needed: Current positions
 portfolio = api.list_positions()
 print(portfolio)
-etf = parse_request()
+
 
 #print(etf)
 
@@ -53,19 +45,30 @@ account = api.get_account()
 cash = round(float(account.buying_power), 2)
 print(f"My buying power is {cash}")
 
-def buy():
-    for key in etf.keys():
-      minimuminvestment = etf[key]['minimuminvestment']
+def buy(data):
+    for row in data:
+      minimuminvestment = row['minimuminvestment']
       #remove $ sign, then turn string to float
       minString = minimuminvestment[1:]
       notional = float(minString)
-      stock = etf[key]['symbol']
+      symbol = row['symbol']
 
       api.submit_order(
-        symbol=stock,
+        symbol=symbol,
         notional=notional,
         side='buy',
         type='market',
         time_in_force='day')
-      print((f"Submitted order for {stock} for ${notional}"))
+      print((f"Submitted order for {symbol} for ${notional}"))
     return
+
+
+#Let's treat this as the buy function - what would it look like?
+@site.route('/data', methods=['POST']) 
+def parse_request(): 
+    data = request.get_json()
+    print(data)
+    buy(data)
+    return jsonify(success=True)
+
+site.run(host='0.0.0.0', port=8080)
