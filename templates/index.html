@@ -9,7 +9,15 @@
 </style>
 
 <body>
-	<h1>Build your custom S&P 500</h1>
+<p></p>
+<p></p>
+<p></p>
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+  <h1>Build a custom ETF
+    <small class="text-muted">Selected from the S&P 500</small>
+  </h1>
 
 	<label>Sectors</label>
           <select id="sector" class="form-control" onchange="filterSector()">
@@ -26,6 +34,7 @@
             <option>Real Estate</option>
             <option>Utilities</option>
           </select>
+          <p></p>
   <label>Industries</label>
           <select id="industry" class="form-control" onchange="filterIndustry()">
             <option value="all-industries">All industries</option>
@@ -155,11 +164,11 @@
             <option>Wireless Telecommunication Services</option>
           </select>
           <p></p>
-          <label>Search for name</label>
-        <input class="form-control" type="text" id="search" onkeyup="searchName()"><p></p>
-
-        <button id="selectAll">Select all</button>
-        <button id="removeAll">Remove  all from selection</button><p></p>
+          <label>Search for stock or symbol</label>
+        <input class="form-control" type="text" id="search" onkeyup="searchName()" placeholder="For example: Apple"><p></p>
+        
+        <button class="btn btn-outline-success" id="selectAll">Select all</button>
+        <button class="btn btn-outline-danger" id="removeAll">Remove  all from selection</button><p></p>
         
         <span id="positionCount"></span><p></p>
         <span id="sumOfWeights"></span><p></p>
@@ -167,9 +176,34 @@
         <span id="mrktInvest">Minimum investment with market cap weighting:</span><p></p>
         <span id="eqInvest">Minimum investment with equal weighting:</span><p></p>
 
-        <button id="weightSelection">Calculate custom ETF</button><p></p>
-        <button id="toJSON">Generate JSON file</button>
+<!-- Not sure how the radio buttons work, only changed label text -->
+<div class="custom-control custom-radio">
+  <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+  <label class="custom-control-label" for="customRadio1">Market cap weighting</label>
+</div>
+<p></p>
+<div class="custom-control custom-radio">
+  <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+  <label class="custom-control-label" for="customRadio2">Equal weighting</label>
+</div>
+<p></p>
+
+        <button id="weightSelection" class="btn btn-outline-secondary btn-block btn-sm">Calculate custom ETF</button><p></p>
+
+        
+    
+
+
+        <button class="btn btn-success" id="toJSON">Buy</button>
         <!--To hide tag add style="display:none;" -->
+
+        </div>
+  <div class="col-md-4"></div>
+</div>
+
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
         <table id="portfolio" class="table table-hover table-condensed">
             <thead>
               <tr>
@@ -208,6 +242,9 @@
          {% endfor %}
           </tbody>
         </table>
+    </div>
+  <div class="col-md-1"></div>
+</div>
     </body>
   <script>
 
