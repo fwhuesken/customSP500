@@ -175,12 +175,26 @@
         <span id="mrktInvest">Minimum investment with market cap weighting:</span><p></p>
         <span id="eqInvest" style="display:none">Minimum investment with equal weighting:</span><p></p>
 
-
+      
 
 
 
         <button id="weightSelection" class="btn btn-outline-secondary btn-block">Calculate current selection</button><p></p>
-        <button class="btn btn-success" id="toJSON">Buy</button>
+
+      <form class="row gy-2 gx-3 align-items-center">
+        <div class="col-auto">
+         <div class="input-group">
+          <div class="input-group-text">$</div>
+          <input type="text" class="form-control" id="autoSizingInputGroup" placeholder="Amount">
+          </div>
+        </div>
+
+        <div class="col-auto">
+          <button class="btn btn-success" id="toJSON">Buy</button>
+        </div>
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </form>
+
         <!--To hide tag add style="display:none" -->
 
 
