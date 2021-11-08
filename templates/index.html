@@ -175,9 +175,18 @@
         <span id="mrktInvest">Minimum investment with market cap weighting:</span><p></p>
         <span id="eqInvest">Minimum investment with equal weighting:</span><p></p>
 
+
+
+
+
         <button id="weightSelection" class="btn btn-outline-secondary btn-block">Calculate current selection</button><p></p>
         <button class="btn btn-success" id="toJSON">Buy</button>
         <!--To hide tag add style="display:none;" -->
+
+
+<p></p>
+
+
 
             </div>
   <div class="col-md-4"></div>
@@ -250,7 +259,10 @@
         const tableData = tableToJson(table);
         fetch(url, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers : { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+       },
             body: JSON.stringify(tableData)
           })
           .then(resp => resp.json())
