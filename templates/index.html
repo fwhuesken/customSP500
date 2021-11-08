@@ -175,9 +175,14 @@
         <span id="mrktInvest">Minimum investment with market cap weighting:</span><p></p>
         <span id="eqInvest">Minimum investment with equal weighting:</span><p></p>
 
+<form>
 
-
-
+<!-- Issue here is that <input> is used in sumOfWeights(). Somehow using radio buttons or additional input tags leads to that function returning the following error: Uncaught TypeError: Cannot read properties of undefined (reading 'getElementsByTagName') -->
+<input type="radio" id="market" name="weightingRadio" value="market">
+  <label for="market">Market cap weighting</label><br>
+<input type="radio" id="equal" name="weightingRadio" value="equal">
+  <label for="market">Equal weighting</label><br>
+</form> 
 
         <button id="weightSelection" class="btn btn-outline-secondary btn-block">Calculate current selection</button><p></p>
         <button class="btn btn-success" id="toJSON">Buy</button>
@@ -362,7 +367,7 @@
             }
 
       function sumUpWeights() {
-          const ele = document.getElementsByTagName('input');
+          const ele = document.getElementsByClassName('myCheckbox');
           let table = document.getElementById("portfolio");
           let tr = table.getElementsByTagName("tr");
           let total = 0;
@@ -380,7 +385,7 @@
 
       function positionWeight(totalWeight) {
         let scalar = 100/totalWeight;
-        const ele = document.getElementsByTagName('input');
+        const ele = document.getElementsByClassName('myCheckbox');
           let table = document.getElementById("portfolio");
           let tr = table.getElementsByTagName("tr");
 
@@ -440,7 +445,7 @@
 //Find the smallest weight of the selection. Used to calculate minimum investment with market weighting
       function smallestWeight() {
         let values = [];
-        const ele = document.getElementsByTagName('input');
+        const ele = document.getElementsByClassName('myCheckbox');
         let table = document.getElementById("portfolio");
         let trs = table.getElementsByTagName("tr");
         for(  i = 0, len = trs.length; i < len; i++ ) {
@@ -463,7 +468,7 @@
         document.getElementById("mrktInvest").innerHTML = "Minimum investment with market cap weighting: $" + minInvest.toFixed(2);
         document.getElementById("eqInvest").innerHTML = "Minimum investment with equal weighting: $" + numPositions.toFixed(2);
 
-        const ele = document.getElementsByTagName('input');
+        const ele = document.getElementsByClassName('myCheckbox');
           let table = document.getElementById("portfolio");
           let tr = table.getElementsByTagName("tr");
 
