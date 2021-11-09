@@ -2,8 +2,6 @@ To do:
 https://www.slickcharts.com/sp500
 
 **Next steps**
-- add $ input field
-- add minimum investment danger message (<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>)
-- arrange input field and buy button inline
-- move #positions next to selection buttons
+- combine filter by sector and industry. right now, "all industries" / "all sectors" overwrite the other filter
+- Execute trade.py 
 

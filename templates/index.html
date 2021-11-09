@@ -9,15 +9,7 @@
 </style>
 
 <body>
-<p></p>
-<p></p>
-<p></p>
-<div class="row">
-  <div class="col-md-4"></div>
-  <div class="col-md-4">
-  <h1>Build a custom ETF
-    <small class="text-muted">Selected from the S&P 500</small>
-  </h1>
+	<h1>Build your custom S&P 500</h1>
 
 	<label>Sectors</label>
           <select id="sector" class="form-control" onchange="filterSector()">
@@ -166,8 +158,8 @@
           <label>Search for name</label>
         <input class="form-control" type="text" id="search" onkeyup="searchName()"><p></p>
 
-        <button class="btn btn-outline-success" id="selectAll">Select all</button>
-        <button class="btn btn-outline-danger" id="removeAll">Remove  all from selection</button><p></p>
+        <button id="selectAll">Select all</button>
+        <button id="removeAll">Remove  all from selection</button><p></p>
         
         <span id="positionCount"></span><p></p>
         <span id="sumOfWeights"></span><p></p>
@@ -175,41 +167,10 @@
         <span id="mrktInvest">Minimum investment with market cap weighting:</span><p></p>
         <span id="eqInvest">Minimum investment with equal weighting:</span><p></p>
 
-      
-
-
-
-        <button id="weightSelection" class="btn btn-outline-secondary btn-block">Calculate current selection</button><p></p>
-
-      <form class="row gy-2 gx-3 align-items-center">
-        <div class="col-auto">
-         <div class="input-group">
-          <div class="input-group-text">$</div>
-          <input type="text" class="form-control" id="autoSizingInputGroup" placeholder="Amount">
-          </div>
-        </div>
-
-        <div class="col-auto">
-          <button class="btn btn-success" id="toJSON">Buy</button>
-        </div>
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-      </form>
-
-        <!--To hide tag add style="display:none" -->
-
-
-<p></p>
-
-
-
-            </div>
-  <div class="col-md-4"></div>
-</div>
-
-<div class="row">
-  <div class="col-md-1"></div>
-  <div class="col-md-10">
-
+        <button id="weightSelection">Calculate custom ETF</button><p></p>
+        <input type="number">
+        <button id="toJSON">Generate JSON file</button>
+        <!--To hide tag add style="display:none;" -->
         <table id="portfolio" class="table table-hover table-condensed">
             <thead>
               <tr>
@@ -235,7 +196,7 @@
                <td>{{row["weight"]}}</td>
                <td id="TDcustometfweight"></td>
                <td id="TDminInvest"></td>
-               <td><input type="checkbox" class="myCheckbox" id="include" value="include" checked></td>
+               <td><input type="checkbox" class="myCheckbox" checked></td>
     <!--         <td><div class="form-group">
                     <div class="input-group mb-3">
                       <input type="number" class="form-control" aria-label="">
@@ -248,9 +209,6 @@
          {% endfor %}
           </tbody>
         </table>
-        </div>
-  <div class="col-md-1"></div>
-</div>
     </body>
   <script>
 
@@ -273,10 +231,7 @@
         const tableData = tableToJson(table);
         fetch(url, {
             method: 'POST',
-            headers : { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-       },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(tableData)
           })
           .then(resp => resp.json())
@@ -293,24 +248,6 @@
         minimumInvestment(smallest, numPositions);
 
       })
-
-
-      //Find the smallest weight of the selection. Used to calculate minimum investment with market weighting
-      function smallestWeight() {
-        let values = [];
-        const ele = document.getElementsByTagName('input');
-        let table = document.getElementById("portfolio");
-        let trs = table.getElementsByTagName("tr");
-        for(  i = 0, len = trs.length; i < len; i++ ) {
-          if(ele[i].type=='checkbox' && ele[i].checked == true) {
-            values.push( parseFloat( trs[ i ].cells[ 4 ].innerHTML ) );
-          }
-        }
-      
-        let smallest = Math.min.apply( null, values );
-        document.getElementById("smWeight").innerHTML = "Smallest weight: " + smallest.toFixed(2) + "%";
-        return smallest;
-          }
       
       function searchName() {
         var input, filter, table, tr, td, i, txtValue;
@@ -392,15 +329,16 @@
                 }
               }
             }
-
+//SOMETHÄING IS WRONG HERE CONSOLE LOG EVERYTHIÄNG
       function sumUpWeights() {
-          const ele = document.getElementsByClassName('myCheckbox');
+          const ele = document.querySelectorAll(".myCheckbox");
           let table = document.getElementById("portfolio");
-          let tr = table.getElementsByTagName("tr");
+          const trs = table.querySelectorAll("tbody tr");
           let total = 0;
-            for(var i=1; i < ele.length; i++){
-              let td = tr[i].getElementsByTagName("td")[4];
+            for(var i=0; i < ele.length; i++){
+              let td = trs[i].getElementsByTagName("td")[4];
               let price = parseFloat(td.innerText);
+
               if(ele[i].type=='checkbox' && ele[i].checked == true)
                 total += price;          
         
@@ -412,13 +350,14 @@
 
       function positionWeight(totalWeight) {
         let scalar = 100/totalWeight;
-        const ele = document.getElementsByClassName('myCheckbox');
+        console.log("Position scalar is " + scalar)
+        const ele = document.querySelectorAll(".myCheckbox");
           let table = document.getElementById("portfolio");
-          let tr = table.getElementsByTagName("tr");
+          const trs = table.querySelectorAll("tbody tr");
 
-            for(var i=1; i < ele.length; i++){
-              let index = tr[i].getElementsByTagName("td")[4];
-              let custom = tr[i].getElementsByTagName("td")[5];
+            for(var i=0; i < ele.length; i++){
+              let index = trs[i].getElementsByTagName("td")[4];
+              let custom = trs[i].getElementsByTagName("td")[5];
               let indexWeight = parseFloat(index.innerText);
               if(ele[i].type=='checkbox' && ele[i].checked == true)
                 custom.innerText = (indexWeight * scalar).toFixed(2);
@@ -428,7 +367,7 @@
       }
       
       function selectAll(){  
-              var ele=document.getElementsByClassName('myCheckbox');  
+              var ele=document.getElementsByTagName('input');  
               for(var i=0; i<ele.length; i++){
                 /* offsetParent checks if checkbox is currently visible */  
                   if(ele[i].type=='checkbox' && ele[i].offsetParent !== null)  
@@ -439,7 +378,7 @@
           }  
 
        function deSelect(){  
-                var ele=document.getElementsByClassName('myCheckbox'); 
+                var ele=document.getElementsByTagName('input'); 
                 for(var i=0; i<ele.length; i++){  
                     if(ele[i].type=='checkbox' && ele[i].offsetParent !== null)  
                         ele[i].checked=false;   
@@ -469,21 +408,44 @@
           label.innerHTML = "Currently selected number of positions: " + total;
           return total;
       }
+//Find the smallest weight of the selection. Used to calculate minimum investment with market weighting
+  //Double check if [4] or [5] is required here. Latter seems more reasonable..
 
+      function smallestWeight() {
+        let values = [];
+        const ele = document.querySelectorAll(".myCheckbox");
+        let table = document.getElementById("portfolio");
+        const trs = table.querySelectorAll("tbody tr");
+        for(  i = 0, len = trs.length; i < len; i++ ) {
+          if(ele[i].type=='checkbox' && ele[i].checked == true) {
+            values.push(parseFloat(trs[i].cells[5].innerHTML) );
+          }
+        }
+      
+
+        let smallest = Math.min.apply( null, values );
+        document.getElementById("smWeight").innerHTML = "Smallest weight: " + smallest.toFixed(2) + "%";
+        //console.log(values);
+        console.log("Smallest weight is " + smallest);
+        return smallest;
+          }
 
 //Takes the smallest weight to calculate minimum investment at market cap weighting. For equal weighting, it uses number of positions in selection * $1
       function minimumInvestment(smallest, numPositions) {
+        //let minInvest = 0;
         let scalar = (1 / smallest);
+        console.log("Scalar is " + scalar)
         minInvest = (100-smallest) * scalar + 1;
+        console.log("Minimum investment is " + minInvest)
         
         document.getElementById("mrktInvest").innerHTML = "Minimum investment with market cap weighting: $" + minInvest.toFixed(2);
         document.getElementById("eqInvest").innerHTML = "Minimum investment with equal weighting: $" + numPositions.toFixed(2);
 
-        const ele = document.getElementsByClassName('myCheckbox');
+        const ele = document.querySelectorAll(".myCheckbox");
           let table = document.getElementById("portfolio");
           let tr = table.getElementsByTagName("tr");
 
-            for(var i=1; i < (ele.length); i++){
+            for(var i=1; i < ele.length; i++){
               let custom = tr[i].getElementsByTagName("td")[5];
               let customWeight = parseFloat(custom.innerText);
               let minimum = tr[i].getElementsByTagName("td")[6];
@@ -498,7 +460,7 @@
       let table = document.getElementById("portfolio");
       function tableToJson(table) {
       let data = [];
-      const ele = document.getElementsByClassName('myCheckbox');
+      const ele = document.getElementsByTagName('input');
       // first row needs to be headers
       let headers = [];
       for ( i=0; i<table.rows[0].cells.length; i++) {
