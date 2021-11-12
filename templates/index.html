@@ -167,9 +167,9 @@
         <span id="mrktInvest">Minimum investment with market cap weighting:</span><p></p>
         <span id="eqInvest">Minimum investment with equal weighting:</span><p></p>
 
-        <input type="radio" id="equalRadio">
+        <input type="radio" name="selectWeighting" id="equalRadio">
         <label for="equalRadio">Equal weighting</label><br>
-        <input type="radio" id="marketRadio">
+        <input type="radio" name="selectWeighting" id="marketRadio">
         <label for="marketRadio">Market weighting</label><br>
 
 
@@ -444,27 +444,28 @@
       function minimumInvestment(smallest, numPositions) {
         //let minInvest = 0;
         let scalar = (1 / smallest);
-        console.log("Scalar is " + scalar)
-        minInvest = (100-smallest) * scalar + 1;
-        console.log("Minimum investment is " + minInvest)
-        
+        let minInvest = (100-smallest) * scalar + 1;
+        const equalRadio = document.getElementById("equalRadio");
+        const marketRadio = document.getElementById("marketRadio");
+        if(equalRadio.checked == true){
+          document.getElementById("eqInvest").innerHTML = "Minimum investment with equal weighting: $" + numPositions.toFixed(2);
+        }else{
         document.getElementById("mrktInvest").innerHTML = "Minimum investment with market cap weighting: $" + minInvest.toFixed(2);
-        document.getElementById("eqInvest").innerHTML = "Minimum investment with equal weighting: $" + numPositions.toFixed(2);
 
-        const ele = document.querySelectorAll(".myCheckbox");
-          let table = document.getElementById("portfolio");
-          let tr = table.getElementsByTagName("tr");
+          const ele = document.querySelectorAll(".myCheckbox");
+            let table = document.getElementById("portfolio");
+            let tr = table.getElementsByTagName("tr");
 
-            for(var i=1; i < ele.length; i++){
-              let custom = tr[i].getElementsByTagName("td")[5];
-              let customWeight = parseFloat(custom.innerText);
-              let minimum = tr[i].getElementsByTagName("td")[6];
-              if(ele[i].type=='checkbox' && ele[i].checked == true)
-                minimum.innerText = "$" + (customWeight * scalar).toFixed(2);
-              else 
-                minimum.innerText = "$0";         
-            }
-
+              for(var i=1; i < ele.length; i++){
+                let custom = tr[i].getElementsByTagName("td")[5];
+                let customWeight = parseFloat(custom.innerText);
+                let minimum = tr[i].getElementsByTagName("td")[6];
+                if(ele[i].type=='checkbox' && ele[i].checked == true)
+                  minimum.innerText = "$" + (customWeight * scalar).toFixed(2);
+                else 
+                  minimum.innerText = "$0";         
+              }
+        }
       }
 //Turns table into JSON file used by server to trade. Should be triggered by a BUY button
       let table = document.getElementById("portfolio");
