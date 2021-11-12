@@ -177,7 +177,7 @@
         <div class="form-group">
           <button id="weightSelection" disabled>Calculate custom ETF</button><p></p>
           <input type="number">
-          <button id="toJSON">Generate JSON file</button><br>
+          <button id="toJSON" disabled>Buy</button><br>
           <small id="displayMinInvest" class="form-text text-muted"></small><p></p>
         </div>
 
@@ -258,15 +258,9 @@
           ;
       })
    
-
-
-        
-
-        
-
-      
       weightSelectionButton = document.getElementById("weightSelection");
       weightSelectionButton.addEventListener("click", function() {
+        displaySelected();
         let totalWeight = sumUpWeights();
         positionWeight(totalWeight);
         let smallest = smallestWeight();
@@ -409,6 +403,7 @@
                   if(ele[i].type=='checkbox' && ele[i].offsetParent !== null)  
                       ele[i].checked=true;  
               }  
+              toJSONButton.disabled = true;
               sumUpWeights();
               smallestWeight();
           }  
@@ -419,7 +414,9 @@
                     if(ele[i].type=='checkbox' && ele[i].offsetParent !== null)  
                         ele[i].checked=false;   
                 }  
+                toJSONButton.disabled = true;
                 sumUpWeights();
+
                 //document.getElementById("smWeight").innerHTML = "Smallest weight: 0.00%"
             }          
       
@@ -430,6 +427,7 @@
         checkbox.addEventListener("change", () => {
           //sumUpWeights();
           countPosition();
+          toJSONButton.disabled = true;
         });
       });
 //Counts number of selected positions. Used to calculate minimum investment with equal weighting
@@ -450,7 +448,7 @@
       function smallestWeight() {
         let values = [];
         const ele = document.querySelectorAll(".myCheckbox");
-        let table = document.getElementById("portfolio");
+        
         const trs = table.querySelectorAll("tbody tr");
         for(  i = 0, len = trs.length; i < len; i++ ) {
           if(ele[i].type=='checkbox' && ele[i].checked == true) {
@@ -466,13 +464,34 @@
         return smallest;
           }
 
+
+
+      function displaySelected() {
+        const table = document.getElementById("portfolio");
+        const trs = table.querySelectorAll("tbody tr");
+        const ele = document.querySelectorAll(".myCheckbox");
+        for(i=0, len=trs.length; i<len; i++) {
+          if(ele[i].type=='checkbox' && ele[i].checked == true) {
+            trs[i].style.display = "";
+          }else{
+            trs[i].style.display = "none";
+          }
+        }
+      }
+
+
+
+
+
+
+
+
+
+
 //Takes the smallest weight to calculate minimum investment at market cap weighting. For equal weighting, it uses number of positions in selection * $1
-        
-
-
-
       function minimumInvestment(smallest, numPositions) {
         //let minInvest = 0;
+        
         let scalar = (1 / smallest);
         let minInvest = (100-smallest) * scalar + 1;
         const equalRadio = document.getElementById("equalRadio");
