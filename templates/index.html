@@ -159,7 +159,7 @@
         <input class="form-control" type="text" id="search" onkeyup="searchName()"><p></p>
 
         <button id="selectAll">Select all</button>
-        <button id="removeAll">Remove  all from selection</button><p></p>
+        <button id="removeAll">Remove  all from selection</button>
         
         <span id="positionCount"></span><p></p>
         <span id="sumOfWeights"></span><p></p>
@@ -284,7 +284,7 @@
         let tr = table.getElementsByTagName("tr");
         let positionCount = document.getElementById("positionCount");
         /* minus 1 for header */
-        positionCount.innerHTML = "Currently selected number of positions: " + (tr.length - 1);
+        positionCount.innerHTML = tr.length - 1 + " selected";
       }
       totalPositions();
       
@@ -398,7 +398,7 @@
             }          
       
       const checkboxes = document.querySelectorAll(".myCheckbox");
-      const label = document.getElementById("positionCount");
+      const positionCount = document.getElementById("positionCount");
 
       const eventCheckbox = checkboxes.forEach((checkbox) => {
         checkbox.addEventListener("change", () => {
@@ -415,7 +415,7 @@
               total += 1;
             }
           }
-          label.innerHTML = "Currently selected number of positions: " + total;
+          positionCount.innerHTML = total + " selected";
           return total;
       }
 //Find the smallest weight of the selection. Used to calculate minimum investment with market weighting
@@ -441,12 +441,17 @@
           }
 
 //Takes the smallest weight to calculate minimum investment at market cap weighting. For equal weighting, it uses number of positions in selection * $1
+        
+
+
+
       function minimumInvestment(smallest, numPositions) {
         //let minInvest = 0;
         let scalar = (1 / smallest);
         let minInvest = (100-smallest) * scalar + 1;
         const equalRadio = document.getElementById("equalRadio");
         const marketRadio = document.getElementById("marketRadio");
+      
         if(equalRadio.checked == true){
           document.getElementById("eqInvest").innerHTML = "Minimum investment with equal weighting: $" + numPositions.toFixed(2);
         }else{
