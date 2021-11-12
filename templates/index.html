@@ -175,7 +175,7 @@
 
 
         <div class="form-group">
-          <button id="weightSelection">Calculate custom ETF</button><p></p>
+          <button id="weightSelection" disabled>Calculate custom ETF</button><p></p>
           <input type="number">
           <button id="toJSON">Generate JSON file</button><br>
           <small id="displayMinInvest" class="form-text text-muted"></small><p></p>
@@ -257,16 +257,33 @@
           //.then(data => console.log(data))
           ;
       })
+   
 
+
+        
+
+        
+
+      
       weightSelectionButton = document.getElementById("weightSelection");
-      weightSelectionButton.addEventListener("click", function () {
+      weightSelectionButton.addEventListener("click", function() {
         let totalWeight = sumUpWeights();
         positionWeight(totalWeight);
         let smallest = smallestWeight();
         let numPositions = countPosition();
         minimumInvestment(smallest, numPositions);
-
       })
+
+      const equalRadio = document.getElementById("equalRadio");
+        equalRadio.addEventListener("change", function() {
+          weightSelectionButton.disabled = false;
+          })
+
+      
+      const marketRadio = document.getElementById("marketRadio");
+        marketRadio.addEventListener("change", function() {
+          weightSelectionButton.disabled = false;
+          })
       
       function searchName() {
         var input, filter, table, tr, td, i, txtValue;
@@ -362,7 +379,7 @@
                 total += price;          
         
             }
-        document.getElementById("sumOfWeights").innerHTML = "Total weight: " + total.toFixed(2) + "%";
+        //document.getElementById("sumOfWeights").innerHTML = "Total weight: " + total.toFixed(2) + "%";
         return total;
       }
 
