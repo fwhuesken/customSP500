@@ -167,6 +167,13 @@
         <span id="mrktInvest">Minimum investment with market cap weighting:</span><p></p>
         <span id="eqInvest">Minimum investment with equal weighting:</span><p></p>
 
+        <input type="radio" id="equalRadio">
+        <label for="equalRadio">Equal weighting</label><br>
+        <input type="radio" id="marketRadio">
+        <label for="marketRadio">Market weighting</label><br>
+
+
+
         <button id="weightSelection">Calculate custom ETF</button><p></p>
         <input type="number">
         <button id="toJSON">Generate JSON file</button>
@@ -332,7 +339,7 @@
                 }
               }
             }
-//SOMETHÄING IS WRONG HERE CONSOLE LOG EVERYTHIÄNG
+
       function sumUpWeights() {
           const ele = document.querySelectorAll(".myCheckbox");
           let table = document.getElementById("portfolio");
