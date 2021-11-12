@@ -164,8 +164,8 @@
         <span id="positionCount"></span><p></p>
         <span id="sumOfWeights"></span><p></p>
         <span id="smWeight">Smallest weight: </span><p></p>
-        <span id="mrktInvest">Minimum investment with market cap weighting:</span><p></p>
-        <span id="eqInvest">Minimum investment with equal weighting:</span><p></p>
+        
+       
 
         <input type="radio" name="selectWeighting" id="equalRadio">
         <label for="equalRadio">Equal weighting</label><br>
@@ -174,10 +174,19 @@
 
 
 
-        <button id="weightSelection">Calculate custom ETF</button><p></p>
-        <input type="number">
-        <button id="toJSON">Generate JSON file</button>
+        <div class="form-group">
+          <button id="weightSelection">Calculate custom ETF</button><p></p>
+          <input type="number">
+          <button id="toJSON">Generate JSON file</button><br>
+          <small id="displayMinInvest" class="form-text text-muted"></small><p></p>
+        </div>
+
+
         <!--To hide tag add style="display:none;" -->
+
+
+
+
         <table id="portfolio" class="table table-hover table-condensed">
             <thead>
               <tr>
@@ -185,10 +194,10 @@
                   <th>Name</th>
                   <th>Sector</th>
                   <th>Industry</th>
-                  <th>Index weight</th>
-                  <th>Custom ETF weight</th>
+                  <th>%</th>
+                  <th>Custom %</th>
                   <th>Minimum investment</th>
-                  <th>Include in selection</th>
+                  <th>Included</th>
     <!--              <th>Share in selection</th>   -->
               </tr>
             </thead>  
@@ -451,11 +460,14 @@
         let minInvest = (100-smallest) * scalar + 1;
         const equalRadio = document.getElementById("equalRadio");
         const marketRadio = document.getElementById("marketRadio");
+        const displayMinInvest = document.getElementById("displayMinInvest");
       
-        if(equalRadio.checked == true){
-          document.getElementById("eqInvest").innerHTML = "Minimum investment with equal weighting: $" + numPositions.toFixed(2);
+        if(equalRadio.checked == false && marketRadio.checked == false ) {
+          return
+        }else if(equalRadio.checked == true){
+          displayMinInvest.innerHTML = "Minimum investment with equal weighting: $" + numPositions.toFixed(2);
         }else{
-        document.getElementById("mrktInvest").innerHTML = "Minimum investment with market cap weighting: $" + minInvest.toFixed(2);
+        displayMinInvest.innerHTML = "Minimum investment with market cap weighting: $" + minInvest.toFixed(2);
 
           const ele = document.querySelectorAll(".myCheckbox");
             let table = document.getElementById("portfolio");
