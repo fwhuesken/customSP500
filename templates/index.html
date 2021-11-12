@@ -163,7 +163,7 @@
         
         <span id="positionCount"></span><p></p>
         <span id="sumOfWeights"></span><p></p>
-        <span id="smWeight">Smallest weight: </span><p></p>
+        <span id="smWeight"></span><p></p>
         
        
 
@@ -182,7 +182,7 @@
         </div>
 
 
-        <!--To hide tag add style="display:none;" -->
+        <!--To hide tag add style="display:none" -->
 
 
 
@@ -196,7 +196,7 @@
                   <th>Industry</th>
                   <th>%</th>
                   <th>Custom %</th>
-                  <th>Minimum investment</th>
+                  <th style="display:none">Minimum investment</th>
                   <th>Included</th>
     <!--              <th>Share in selection</th>   -->
               </tr>
@@ -211,7 +211,7 @@
                <td>{{row["industry"]}}</td>
                <td>{{row["weight"]}}</td>
                <td id="TDcustometfweight"></td>
-               <td id="TDminInvest"></td>
+               <td id="TDminInvest" style="display:none"></td>
                <td><input type="checkbox" class="myCheckbox" checked></td>
     <!--         <td><div class="form-group">
                     <div class="input-group mb-3">
@@ -403,7 +403,7 @@
                         ele[i].checked=false;   
                 }  
                 sumUpWeights();
-                document.getElementById("smWeight").innerHTML = "Smallest weight: 0.00%"
+                //document.getElementById("smWeight").innerHTML = "Smallest weight: 0.00%"
             }          
       
       const checkboxes = document.querySelectorAll(".myCheckbox");
@@ -443,9 +443,9 @@
       
 
         let smallest = Math.min.apply( null, values );
-        document.getElementById("smWeight").innerHTML = "Smallest weight: " + smallest.toFixed(2) + "%";
+        //document.getElementById("smWeight").innerHTML = "Smallest weight: " + smallest.toFixed(2) + "%";
         //console.log(values);
-        console.log("Smallest weight is " + smallest);
+        //console.log("Smallest weight is " + smallest);
         return smallest;
           }
 
