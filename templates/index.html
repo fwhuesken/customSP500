@@ -493,7 +493,7 @@
         //let minInvest = 0;
         
         let scalar = (1 / smallest);
-        let minInvest = (100-smallest) * scalar + 1;
+        
         const equalRadio = document.getElementById("equalRadio");
         const marketRadio = document.getElementById("marketRadio");
         const displayMinInvest = document.getElementById("displayMinInvest");
@@ -501,8 +501,13 @@
         if(equalRadio.checked == false && marketRadio.checked == false ) {
           return
         }else if(equalRadio.checked == true){
-          displayMinInvest.innerHTML = "Minimum investment with equal weighting: $" + numPositions.toFixed(2);
+          let minInvest = numPositions
+
+          displayMinInvest.innerHTML = "Minimum investment with equal weighting: $" + minInvest.toFixed(2);
+          return minInvest;
+          
         }else{
+        let minInvest = (100-smallest) * scalar + 1;
         displayMinInvest.innerHTML = "Minimum investment with market cap weighting: $" + minInvest.toFixed(2);
 
           const ele = document.querySelectorAll(".myCheckbox");
@@ -518,8 +523,12 @@
                 else 
                   minimum.innerText = "$0";         
               }
+              return minInvest;
         }
       }
+
+      
+
 //Turns table into JSON file used by server to trade. Should be triggered by a BUY button
       let table = document.getElementById("portfolio");
       function tableToJson(table) {
