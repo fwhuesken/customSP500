@@ -176,7 +176,7 @@
 
         <div class="form-group">
           <button id="weightSelection" disabled>Calculate custom ETF</button><p></p>
-          <input type="number">
+          <input type="number" id="amount">
           <button id="toJSON" disabled>Buy</button><br>
           <small id="displayMinInvest" class="form-text text-muted"></small><p></p>
         </div>
@@ -527,7 +527,7 @@
         }
       }
 
-      
+
 
 //Turns table into JSON file used by server to trade. Should be triggered by a BUY button
       let table = document.getElementById("portfolio");
