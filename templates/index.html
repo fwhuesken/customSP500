@@ -478,8 +478,38 @@
           }
         }
       }
+//There has to be a better way of checking whether the minimum investment is satisfied without calling half of minInvest again
+      const amountInput = document.getElementById("amount");
+      amountInput.addEventListener("change", function () {
+        let numPositions = countPosition();
+        let smallest = smallestWeight();
+        enableBuy(smallest, numPositions);
+      })
 
+      function enableBuy(smallest, numPositions) {
+        let amount = parseFloat(amountInput.value);
+        console.log(amount);        
+        let scalar = (1 / smallest);
+        console.log("Smallest is " + smallest)
+        console.log(scalar);
+        const equalRadio = document.getElementById("equalRadio");
+        const marketRadio = document.getElementById("marketRadio");
+      
+        if(equalRadio.checked == false && marketRadio.checked == false ) {
+          return
 
+        }else if(equalRadio.checked == true){
+          let minInvest = parseFloat(numPositions);
+          if(amount >= minInvest)
+            toJSONButton.disabled = false;
+
+        }else{
+        let minInvest = (100-smallest) * scalar + 1;
+          if(amount >= minInvest)
+            toJSONButton.disabled = false;
+        }
+      }
+      
 
 
 
@@ -501,9 +531,10 @@
         if(equalRadio.checked == false && marketRadio.checked == false ) {
           return
         }else if(equalRadio.checked == true){
-          let minInvest = numPositions
+          let minInvest = parseFloat(numPositions);
 
           displayMinInvest.innerHTML = "Minimum investment with equal weighting: $" + minInvest.toFixed(2);
+          console.log("Equal cap minimum: " + minInvest);
           return minInvest;
           
         }else{
@@ -523,11 +554,20 @@
                 else 
                   minimum.innerText = "$0";         
               }
+              console.log("Market cap minimum: " + minInvest);
               return minInvest;
         }
       }
 
-
+   /*   const amount = document.getElementById("amount");
+      amount.addEventListener("change", function() {
+        let amountValue = parseFloat(amount.value);
+        console.log(amountValue);
+        let minAmount = parseFloat(minimumInvestment());
+        console.log(parseFloat(minAmount));
+        if(amountValue >= minAmount)
+          toJSONButton.disabled = false;
+      }) */
 
 //Turns table into JSON file used by server to trade. Should be triggered by a BUY button
       let table = document.getElementById("portfolio");
