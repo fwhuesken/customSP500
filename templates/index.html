@@ -272,8 +272,9 @@
         equalRadio.addEventListener("change", function() {
           weightSelectionButton.disabled = false;
           })
+      const amountInput = document.getElementById("amount");
 
-      
+
       const marketRadio = document.getElementById("marketRadio");
         marketRadio.addEventListener("change", function() {
           weightSelectionButton.disabled = false;
@@ -404,6 +405,7 @@
                       ele[i].checked=true;  
               }  
               toJSONButton.disabled = true;
+              amountInput.value = '';
               sumUpWeights();
               smallestWeight();
           }  
@@ -415,6 +417,7 @@
                         ele[i].checked=false;   
                 }  
                 toJSONButton.disabled = true;
+                amountInput.value = '';
                 sumUpWeights();
 
                 //document.getElementById("smWeight").innerHTML = "Smallest weight: 0.00%"
@@ -428,6 +431,7 @@
           //sumUpWeights();
           countPosition();
           toJSONButton.disabled = true;
+          amountInput.value = '';
         });
       });
 //Counts number of selected positions. Used to calculate minimum investment with equal weighting
@@ -479,7 +483,7 @@
         }
       }
 //There has to be a better way of checking whether the minimum investment is satisfied without calling half of minInvest again
-      const amountInput = document.getElementById("amount");
+      
       amountInput.addEventListener("change", function () {
         let numPositions = countPosition();
         let smallest = smallestWeight();
@@ -490,8 +494,6 @@
         let amount = parseFloat(amountInput.value);
         console.log(amount);        
         let scalar = (1 / smallest);
-        console.log("Smallest is " + smallest)
-        console.log(scalar);
         const equalRadio = document.getElementById("equalRadio");
         const marketRadio = document.getElementById("marketRadio");
       
@@ -500,14 +502,21 @@
 
         }else if(equalRadio.checked == true){
           let minInvest = parseFloat(numPositions);
-          if(amount >= minInvest)
+          if(amount >= minInvest){
             toJSONButton.disabled = false;
+          }else{
+            toJSONButton.disabled = true;
+          }
 
-        }else{
-        let minInvest = (100-smallest) * scalar + 1;
+        }else if(marketRadio.checked == true){
+          let minInvest = (100-smallest) * scalar + 1;
           if(amount >= minInvest)
             toJSONButton.disabled = false;
-        }
+            }else{
+            toJSONButton.disabled = true;
+          }
+  
+        
       }
       
 
