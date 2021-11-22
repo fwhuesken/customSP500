@@ -196,7 +196,7 @@
                   <th>Industry</th>
                   <th>%</th>
                   <th>Custom %</th>
-                  <th style="display:none">Minimum investment</th>
+                  <th>Minimum investment</th>
                   <th>Included</th>
     <!--              <th>Share in selection</th>   -->
               </tr>
@@ -211,7 +211,7 @@
                <td>{{row["industry"]}}</td>
                <td>{{row["weight"]}}</td>
                <td id="TDcustometfweight"></td>
-               <td id="TDminInvest" style="display:none"></td>
+               <td id="TDminInvest"></td>
                <td><input type="checkbox" class="myCheckbox" checked></td>
     <!--         <td><div class="form-group">
                     <div class="input-group mb-3">
@@ -245,6 +245,7 @@
         const url = '/data';
         const table = document.getElementById("portfolio");
         const tableData = tableToJson(table);
+        console.log(tableData);
         fetch(url, {
             method: 'POST',
             headers : { 
@@ -271,6 +272,7 @@
       const equalRadio = document.getElementById("equalRadio");
         equalRadio.addEventListener("change", function() {
           weightSelectionButton.disabled = false;
+          toJSONButton.disabled = true;
           })
       const amountInput = document.getElementById("amount");
 
@@ -278,6 +280,7 @@
       const marketRadio = document.getElementById("marketRadio");
         marketRadio.addEventListener("change", function() {
           weightSelectionButton.disabled = false;
+          toJSONButton.disabled = true;
           })
       
       function searchName() {
@@ -463,8 +466,8 @@
 
         let smallest = Math.min.apply( null, values );
         //document.getElementById("smWeight").innerHTML = "Smallest weight: " + smallest.toFixed(2) + "%";
-        //console.log(values);
-        //console.log("Smallest weight is " + smallest);
+        console.log(values);
+        console.log("Smallest weight is " + smallest);
         return smallest;
           }
 
@@ -508,24 +511,19 @@
             toJSONButton.disabled = true;
           }
 
-        }else if(marketRadio.checked == true){
+        }else{
           let minInvest = (100-smallest) * scalar + 1;
-          if(amount >= minInvest)
+          if(amount >= minInvest){
             toJSONButton.disabled = false;
-            }else{
+          }else{
             toJSONButton.disabled = true;
           }
+ 
   
-        
+        } 
       }
+    
       
-
-
-
-
-
-
-
 
 //Takes the smallest weight to calculate minimum investment at market cap weighting. For equal weighting, it uses number of positions in selection * $1
       function minimumInvestment(smallest, numPositions) {
@@ -543,7 +541,7 @@
           let minInvest = parseFloat(numPositions);
 
           displayMinInvest.innerHTML = "Minimum investment with equal weighting: $" + minInvest.toFixed(2);
-          console.log("Equal cap minimum: " + minInvest);
+          //console.log("Equal cap minimum: " + minInvest);
           return minInvest;
           
         }else{
@@ -554,62 +552,52 @@
             let table = document.getElementById("portfolio");
             let tr = table.getElementsByTagName("tr");
 
-              for(var i=1; i < ele.length; i++){
-                let custom = tr[i].getElementsByTagName("td")[5];
+              for(var i=0; i < ele.length; i++){
+                let custom = tr[i+1].getElementsByTagName("td")[5];
                 let customWeight = parseFloat(custom.innerText);
-                let minimum = tr[i].getElementsByTagName("td")[6];
-                if(ele[i].type=='checkbox' && ele[i].checked == true)
+                let minimum = tr[i+1].getElementsByTagName("td")[6];
+                if(ele[i].type=='checkbox' && ele[i].checked == true){
+                  //console.log("Custom weight is: " + customWeight + ", scalar is: " + scalar)
                   minimum.innerText = "$" + (customWeight * scalar).toFixed(2);
-                else 
-                  minimum.innerText = "$0";         
+                }else{
+                  minimum.innerText = "$0";  
+                }       
               }
               console.log("Market cap minimum: " + minInvest);
               return minInvest;
         }
       }
 
-   /*   const amount = document.getElementById("amount");
-      amount.addEventListener("change", function() {
-        let amountValue = parseFloat(amount.value);
-        console.log(amountValue);
-        let minAmount = parseFloat(minimumInvestment());
-        console.log(parseFloat(minAmount));
-        if(amountValue >= minAmount)
-          toJSONButton.disabled = false;
-      }) */
-
 //Turns table into JSON file used by server to trade. Should be triggered by a BUY button
       let table = document.getElementById("portfolio");
+
       function tableToJson(table) {
-      let data = [];
-      const ele = document.getElementsByTagName('input');
-      // first row needs to be headers
-      let headers = [];
-      for ( i=0; i<table.rows[0].cells.length; i++) {
-          headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi,'');
-      }
-
-      // go through cells
-      for ( i=1; i<table.rows.length; i++) {
-        if(ele[i].type=='checkbox' && ele[i].checked == true) {
-          let tableRow = table.rows[i];
-          let rowData = {};
-
-          for ( j=0; j<tableRow.cells.length; j++) {
-
-              rowData[ headers[j] ] = tableRow.cells[j].innerHTML;
-
-          }
-        
-          data.push(rowData);
+        let data = [];
+        const ele = document.querySelectorAll(".myCheckbox");
+        // first row needs to be headers
+        let headers = [];
+        for ( i=0; i<table.rows[0].cells.length; i++) {
+            headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi,'');
         }
-      }       
-      console.log(data);
-      return data;
-  }
 
+        // go through cells
+        for ( i=0; i<ele.length; i++) {
+          if(ele[i].type=='checkbox' && ele[i].checked == true) {
+            let tableRow = table.rows[i+1];
+            let rowData = {};
 
+            for ( j=0; j<tableRow.cells.length; j++) {
 
+                rowData[ headers[j] ] = tableRow.cells[j].innerHTML;
 
-    </script>
+            }
+          
+            data.push(rowData);
+          }
+        }       
+        console.log(data);
+        return data;
+    }
+
+</script>
 </html>
