@@ -399,7 +399,8 @@
                 custom.innerText = 0;         
             }
       }
-      
+      const displayMinInvest = document.getElementById("displayMinInvest");
+
       function selectAll(){  
               var ele=document.getElementsByTagName('input');  
               for(var i=0; i<ele.length; i++){
@@ -411,6 +412,7 @@
               amountInput.value = '';
               sumUpWeights();
               smallestWeight();
+              displayMinInvest.innerHTML = '';
           }  
 
        function deSelect(){  
@@ -422,7 +424,7 @@
                 toJSONButton.disabled = true;
                 amountInput.value = '';
                 sumUpWeights();
-
+                displayMinInvest.innerHTML = '';
                 //document.getElementById("smWeight").innerHTML = "Smallest weight: 0.00%"
             }          
       
@@ -435,6 +437,7 @@
           countPosition();
           toJSONButton.disabled = true;
           amountInput.value = '';
+          displayMinInvest.innerHTML = '';
         });
       });
 //Counts number of selected positions. Used to calculate minimum investment with equal weighting
