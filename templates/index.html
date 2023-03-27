@@ -9,7 +9,15 @@
 </style>
 
 <body>
-	<h1>Build your custom S&P 500</h1>
+	<p></p>
+  <p></p>
+  <p></p>
+  <div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+  <h1>Build a custom ETF
+    <small class="text-muted">Selected from the S&P 500</small>
+  </h1>
 
 	<label>Sectors</label>
           <select id="sector" class="form-control" onchange="filterSector()">
@@ -25,7 +33,7 @@
             <option>Materials</option>
             <option>Real Estate</option>
             <option>Utilities</option>
-          </select>
+          </select><p></p>
   <label>Industries</label>
           <select id="industry" class="form-control" onchange="filterIndustry()">
             <option value="all-industries">All industries</option>
@@ -155,11 +163,11 @@
             <option>Wireless Telecommunication Services</option>
           </select>
           <p></p>
-          <label>Search for stock</label>
-        <input class="form-control" type="text" id="search" onkeyup="searchName()"><p></p>
+          <label>Search for stock or symbol</label>
+        <input class="form-control" type="text" id="search" onkeyup="searchName()" placeholder="For example: Apple"><p></p>
 
-        <button id="selectAll">Select all</button>
-        <button id="removeAll">Remove  all from selection</button>
+        <button class="btn btn-outline-success" id="selectAll">Select all</button>
+        <button class="btn btn-outline-danger" id="removeAll">Remove  all from selection</button><p></p>
         
         <span id="positionCount"></span><p></p>
         <span id="sumOfWeights"></span><p></p>
@@ -175,17 +183,22 @@
 
 
         <div class="form-group">
-          <button id="weightSelection" disabled>Calculate custom ETF</button><p></p>
+          <button id="weightSelection" class="btn btn-outline-secondary btn-block" disabled>Calculate current selection</button><p></p>
           <input type="number" id="amount">
-          <button id="toJSON" disabled>Buy</button><br>
+          <button class="btn btn-success" id="toJSON" disabled>Buy</button><br>
           <small id="displayMinInvest" class="form-text text-muted"></small><p></p>
         </div>
-
+    </div>
+  <div class="col-md-4"></div>
+</div>
 
         <!--To hide tag add style="display:none" -->
 
 
 
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
 
         <table id="portfolio" class="table table-hover table-condensed">
             <thead>
@@ -194,8 +207,8 @@
                   <th>Name</th>
                   <th>Sector</th>
                   <th>Industry</th>
-                  <th>%</th>
-                  <th>Custom %</th>
+                  <th>Market weight</th>
+                  <th>Your weight</th>
                   <th>Minimum investment</th>
                   <th>Include</th>
     <!--              <th>Share in selection</th>   -->
@@ -225,6 +238,9 @@
          {% endfor %}
           </tbody>
         </table>
+        </div>
+  <div class="col-md-1"></div>
+</div>
     </body>
   <script>
 
