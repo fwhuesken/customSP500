@@ -1,1 +1,1 @@
-To use this code update config.py with your API key and secret from https://alpaca.markets/
+To use this repository add config.py and add API_KEY, API_URL, SECRET_KEY from https://alpaca.markets/
