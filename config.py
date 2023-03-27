@@ -1,3 +1,0 @@
-API_URL = ""
-API_KEY = ""
-SECRET_KEY = ""
