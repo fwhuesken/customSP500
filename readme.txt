@@ -1,0 +1,1 @@
+To use this code update config.py with your API key and secret from https://alpaca.markets/
